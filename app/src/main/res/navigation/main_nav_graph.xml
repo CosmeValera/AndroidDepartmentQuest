@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_nav_graph"
+    app:startDestination="@+id/nav_main">
+
+    <fragment
+        android:id="@+id/nav_main"
+        android:name="com.dam.t08p01.vista.fragmentos.MainFragment"
+        android:label="@string/app_name"
+        tools:layout="@layout/fragment_main">
+        <action
+            android:id="@+id/action_nav_main_to_nav_login"
+            app:destination="@id/nav_login" />
+        <action
+            android:id="@+id/action_nav_main_to_nav_registro"
+            app:destination="@id/nav_registro" />
+        <action
+            android:id="@+id/action_nav_main_to_nav_prefs"
+            app:destination="@id/nav_prefs" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_login"
+        android:name="com.dam.t08p01.vista.fragmentos.LoginFragment"
+        android:label="@string/menu_Login"
+        tools:layout="@layout/fragment_login" />
+    <fragment
+        android:id="@+id/nav_registro"
+        android:name="com.dam.t08p01.vista.fragmentos.RegistroFragment"
+        android:label="@string/menu_Registro"
+        tools:layout="@layout/fragment_registro" />
+    <fragment
+        android:id="@+id/nav_prefs"
+        android:name="com.dam.t08p01.vista.fragmentos.PrefsFragment"
+        android:label="@string/menu_Prefs" />
+    <dialog
+        android:id="@+id/dlgConfirmacionMain"
+        android:name="com.dam.t08p01.vista.dialogos.DlgConfirmacion" />
+    <action
+        android:id="@+id/action_global_dlgConfirmacionMain"
+        app:destination="@id/dlgConfirmacionMain" />
+
+</navigation>

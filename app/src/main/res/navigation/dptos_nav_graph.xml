@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/dptos_nav_graph"
+    app:startDestination="@id/bus_dptos_fragment">
+
+    <fragment
+        android:id="@+id/bus_dptos_fragment"
+        android:name="com.dam.t08p01.vista.fragmentos.BusDptosFragment"
+        tools:layout="@layout/fragment_bus_dptos">
+        <action
+            android:id="@+id/action_bus_dptos_fragment_to_mto_dptos_fragment"
+            app:destination="@id/mto_dptos_fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/mto_dptos_fragment"
+        android:name="com.dam.t08p01.vista.fragmentos.MtoDptosFragment"
+        tools:layout="@layout/fragment_mto_dptos" />
+    <dialog
+        android:id="@+id/dlgConfirmacionDptos"
+        android:name="com.dam.t08p01.vista.dialogos.DlgConfirmacion" />
+    <action
+        android:id="@+id/action_global_dlgConfirmacionDptos"
+        app:destination="@id/dlgConfirmacionDptos" />
+
+</navigation>

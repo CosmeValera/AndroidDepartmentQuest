@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/aulas_nav_graph"
+    app:startDestination="@id/bus_aulas_fragment">
+
+    <fragment
+        android:id="@+id/bus_aulas_fragment"
+        android:name="com.dam.t08p01.vista.fragmentos.BusAulasFragment"
+        tools:layout="@layout/fragment_bus_aulas">
+        <action
+            android:id="@+id/action_bus_aulas_fragment_to_mto_aulas_fragment"
+            app:destination="@id/mto_aulas_fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/mto_aulas_fragment"
+        android:name="com.dam.t08p01.vista.fragmentos.MtoAulasFragment"
+        tools:layout="@layout/fragment_mto_aulas" />
+    <dialog
+        android:id="@+id/dlgConfirmacionAulas"
+        android:name="com.dam.t08p01.vista.dialogos.DlgConfirmacion" />
+    <action
+        android:id="@+id/action_global_dlgConfirmacionAulas"
+        app:destination="@id/dlgConfirmacionAulas" />
+
+</navigation>

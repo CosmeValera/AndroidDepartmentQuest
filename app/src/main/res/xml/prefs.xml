@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:scrollbars="vertical">
+
+    <PreferenceCategory app:title="@string/category_Almacenamiento">
+        <EditTextPreference
+            app:defaultValue="@string/Firebase_name_default"
+            app:isPreferenceVisible="false"
+            app:key="@string/Firebase_name_key"
+            app:summary="@string/Firebase_name_summary"
+            app:title="@string/Firebase_name_title" />
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="@string/category_Interfaz">
+        <SwitchPreferenceCompat
+            app:defaultValue="@string/login_default"
+            app:key="@string/login_key"
+            app:summary="@string/login_summary"
+            app:title="@string/login_title" />
+        <SwitchPreference
+            app:defaultValue="@string/splashApp_default"
+            app:key="@string/splashApp_key"
+            app:summary="@string/splashApp_summary"
+            app:title="@string/splashApp_title" />
+    </PreferenceCategory>
+
+</PreferenceScreen>

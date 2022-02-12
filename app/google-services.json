@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "48068491913",
+    "project_id": "lateral-goods-340715",
+    "storage_bucket": "lateral-goods-340715.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:48068491913:android:616d45562b03fcac272458",
+        "android_client_info": {
+          "package_name": "com.dam.t08p01"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "48068491913-tope6n60mpuphicfkp206mdh750tn2av.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB-60ZOfNo3NNQ3mBOrtx4Pp-6z8pZ4VR0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "48068491913-tope6n60mpuphicfkp206mdh750tn2av.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

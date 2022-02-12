@@ -1,0 +1,171 @@
+<resources>
+    <string name="app_name">iChirinos v3</string>
+    <string name="title_activity_dptos">Departamentos</string>
+    <string name="title_activity_aulas">Aulas</string>
+    <string name="title_activity_productos">Productos</string>
+
+    <!--Navigation Drawer-->
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">iChirinos v3</string>
+    <string name="nav_header_subtitle">SQLite</string>
+    <string name="nav_header_desc">Navigation header</string>
+
+    <!--Menus-->
+
+    <string name="menu_Login">Login</string>
+    <string name="menu_Registro">Registro</string>
+    <string name="menu_Prefs">Preferencias</string>
+    <string name="menu_Salir">Salir</string>
+
+    <string name="menu_Inicio">Inicio</string>
+    <string name="menu_Dptos">Dptos</string>
+    <string name="menu_Aulas">Aulas</string>
+    <string name="menu_Productos">Productos</string>
+
+    <string name="menu_Filtro">Filtro</string>
+
+    <!--Mensajes-->
+
+    <string name="msg_DlgConfirmacion_Salir">¿Desea salir?</string>
+    <string name="msg_DlgConfirmacion_Eliminar">Se va a eliminar el elemento seleccionado.\n¿Está seguro?</string>
+    <string name="msg_DlgConfirmacion_BorrarRegistro">Se va a eliminar el fichero de Registro.\n¿Está seguro?</string>
+
+    <string name="msg_LoginOK">Login correcto.</string>
+    <string name="msg_LoginKO">Login incorrecto!!</string>
+    <string name="msg_NoLogin">No Login!!</string>
+    <string name="msg_LoginPermisos">No tienes permisos!!</string>
+    <string name="msg_CambioBD">Debe reiniciar la App!!</string>
+
+    <string name="msg_FaltanDatosObligatorios">Faltan datos obligatorios!!</string>
+    <string name="msg_AltaDepartamentoOK">Alta de departamento correcta.</string>
+    <string name="msg_AltaDepartamentoKO">Alta de departamento incorrecta!!</string>
+    <string name="msg_EditarDepartamentoOK">Edición de departamento correcta.</string>
+    <string name="msg_EditarDepartamentoKO">Edición de departamento incorrecta!!</string>
+    <string name="msg_BajaDepartamentoOK">Baja de departamento correcta.</string>
+    <string name="msg_BajaDepartamentoKO">Baja de departamento incorrecta!!</string>
+
+    <string name="msg_AltaAulaOK">Alta de aula correcta.</string>
+    <string name="msg_AltaAulaKO">Alta de aula incorrecta!!</string>
+    <string name="msg_EditarAulaOK">Edición de aula correcta.</string>
+    <string name="msg_EditarAulaKO">Edición de aula incorrecta!!</string>
+    <string name="msg_BajaAulaOK">Baja de aula correcta.</string>
+    <string name="msg_BajaAulaKO">Baja de aula incorrecta!!</string>
+
+    <string name="msg_AltaProductoOK">Alta de producto correcta.</string>
+    <string name="msg_AltaProductoKO">Alta de producto incorrecta!!</string>
+    <string name="msg_EditarProductoOK">Edición de producto correcta.</string>
+    <string name="msg_EditarProductoKO">Edición de producto incorrecta!!</string>
+    <string name="msg_BajaProductoOK">Baja de producto correcta.</string>
+    <string name="msg_BajaProductoKO">Baja de producto incorrecta!!</string>
+
+    <string name="msg_ErrorRegistro">Error en Registro!!</string>
+    <string name="msg_ErrorRecuperarRegistro">Error al recuperar Registro!!</string>
+    <string name="msg_ErrorGuardarRegistro">Error al guardar Registro!!</string>
+    <string name="msg_BorrarRegistroOK">Borrado de Registro correcto.</string>
+    <string name="msg_BorrarRegistroKO">Borrado de Registro incorrecto!!</string>
+
+    <!--Widgets-->
+
+    <string name="tv_Main_Login">No Login</string>
+
+    <string name="tv_Login_Cabecera">LOGIN</string>
+    <string name="tv_Login_Dptos">Dptos:</string>
+    <string name="tv_Login_Clave">Clave:</string>
+
+    <string name="tv_Dpto_Cabecera_Editar">EDITAR DEPARTAMENTO</string>
+    <string name="tv_Dpto_Cabecera_Crear">CREAR DEPARTAMENTO</string>
+    <string name="bt_Dpto_Eliminar">Eliminar</string>
+    <string name="bt_Dpto_Editar">Editar</string>
+    <string name="bt_Dpto_Crear">Crear</string>
+    <string name="tv_Dpto_Id">Id:</string>
+    <string name="tv_Dpto_Nombre">Nombre:</string>
+    <string name="tv_Dpto_Clave">Clave:</string>
+    <string name="iv_Dpto_contentDescription">Imagen Dpto</string>
+
+    <string name="tv_Aula_Cabecera_Editar">EDITAR AULA</string>
+    <string name="tv_Aula_Cabecera_Crear">CREAR AULA</string>
+    <string name="bt_Aula_Eliminar">Eliminar</string>
+    <string name="bt_Aula_Editar">Editar</string>
+    <string name="bt_Aula_Crear">Crear</string>
+    <string name="tv_Aula_IdDpto">Dpto:</string>
+    <string name="tv_Aula_Id">Id:</string>
+    <string name="tv_Aula_Nombre">Nombre:</string>
+    <string name="iv_Aula_contentDescription">Imagen Aula</string>
+
+    <string name="tv_Producto_Cabecera_Editar">EDITAR PRODUCTO</string>
+    <string name="tv_Producto_Cabecera_Crear">CREAR PRODUCTO</string>
+    <string name="bt_Producto_Eliminar">Eliminar</string>
+    <string name="bt_Producto_Editar">Editar</string>
+    <string name="bt_Producto_Crear">Crear</string>
+    <string name="tv_Producto_IdDpto">Dpto:</string>
+    <string name="tv_Producto_Id">Id:</string>
+    <string name="tv_Producto_Nombre">Nombre:</string>
+    <string name="tv_Producto_FecAlta">Fec.Alta:</string>
+    <string name="tv_Producto_Aula">Aula:</string>
+    <string name="tv_Producto_Cantidad">Cantidad:</string>
+    <string name="iv_Producto_contentDescription">Imagen Producto</string>
+
+    <string name="tv_Filtro_Cabecera">FILTRO</string>
+    <string name="tv_Filtro_Dpto">Dpto:</string>
+    <string name="tv_Filtro_Aula">Aula:</string>
+    <string name="tv_Filtro_FecAlta">Fec. Alta:</string>
+    <string name="bt_Filtro_FecAlta">&#8230;</string>
+
+    <string name="bt_Registro_Borrar">Borrar</string>
+
+    <string name="tv_rv_Dpto_Id">ID: %1$s</string>
+    <string name="tv_rv_Dpto_Nombre">Nombre: %1$s</string>
+    <string name="tv_rv_Aula_IdDpto">Dpto: %1$s</string>
+    <string name="tv_rv_Aula_Id">ID: %1$s</string>
+    <string name="tv_rv_Aula_Nombre">Nombre: %1$s</string>
+    <string name="tv_rv_Producto_IdDpto">Dpto: %1$s</string>
+    <string name="tv_rv_Producto_Id">ID: %1$s</string>
+    <string name="tv_rv_Producto_FecAlta">Fec.Alta: %1$s</string>
+    <string name="tv_rv_Producto_Nombre">Nombre: %1$s</string>
+    <string name="tv_rv_Producto_IdAula">Aula: %1$s</string>
+    <string name="tv_rv_Producto_Cantidad">Cant.: %1$03d</string>
+
+    <!--Widgets genéricos-->
+
+    <string name="bt_OK">OK</string>
+    <string name="bt_KO">KO</string>
+    <string name="bt_SI">Si</string>
+    <string name="bt_NO">No</string>
+    <string name="bt_Aceptar">Aceptar</string>
+    <string name="bt_Cancelar">Cancelar</string>
+    <string name="bt_Salir">Salir</string>
+
+    <!--Preferencias-->
+
+    <string name="category_Almacenamiento">Almacenamiento</string>
+    <string name="category_Registro">Registro</string>
+    <string name="category_Interfaz">Interfaz</string>
+
+    <string name="Firebase_name_key">Firebase_name</string>
+    <string name="Firebase_name_title">Firebase Nombre</string>
+    <string name="Firebase_name_summary">Nombre raíz en Firebase</string>
+    <string name="Firebase_name_default">iChirinosv3</string>
+
+    <string name="registro_key">registro</string>
+    <string name="registro_title">Habilitar Registro</string>
+    <string name="registro_summary">Habilita el uso del Registro de Productos</string>
+    <string name="registro_default">false</string>
+
+    <string name="ficheroRegistro_key">ficheroRegistro</string>
+    <string name="ficheroRegistro_title">Fichero Registro</string>
+    <string name="ficheroRegistro_summary">Nombre del fichero de Registro</string>
+    <string name="ficheroRegistro_default">registro.dat</string>
+
+    <string name="login_key">login</string>
+    <string name="login_title">Mostrar Login</string>
+    <string name="login_summary">Muestra el Login al inicio</string>
+    <string name="login_default">true</string>
+
+    <string name="splashApp_key">splashApp</string>
+    <string name="splashApp_title">Duración Splash (3sg)</string>
+    <string name="splashApp_summary">Establece a 3 sg la duración del Splash</string>
+    <string name="splashApp_default">false</string>
+
+</resources>

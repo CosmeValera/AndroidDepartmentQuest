@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".vista.fragmentos.MtoDptosFragment">
+
+    <TextView
+        android:id="@+id/tvDptoCabecera"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:background="@color/colorPrimary"
+        android:gravity="center_horizontal"
+        android:textColor="@android:color/white"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvDptoId"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="128dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="8dp"
+        android:labelFor="@id/etDptoId"
+        android:text="@string/tv_Dpto_Id"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/glineMtoDptos"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvDptoCabecera" />
+
+    <EditText
+        android:id="@+id/etDptoId"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="128dp"
+        android:ems="10"
+        android:importantForAutofill="no"
+        android:inputType="textNoSuggestions|number"
+        android:minHeight="48dp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tvDptoId"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/glineMtoDptos"
+        tools:ignore="DuplicateSpeakableTextCheck" />
+
+    <TextView
+        android:id="@+id/tvDptoNombre"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="128dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="8dp"
+        android:labelFor="@id/etDptoNombre"
+        android:text="@string/tv_Dpto_Nombre"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/glineMtoDptos"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvDptoId" />
+
+    <EditText
+        android:id="@+id/etDptoNombre"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="128dp"
+        android:ems="10"
+        android:importantForAutofill="no"
+        android:inputType="textNoSuggestions|text"
+        android:minHeight="48dp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tvDptoNombre"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/glineMtoDptos"
+        tools:ignore="DuplicateSpeakableTextCheck" />
+
+    <TextView
+        android:id="@+id/tvDptoClave"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="128dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="8dp"
+        android:labelFor="@id/etDptoClave"
+        android:text="@string/tv_Dpto_Clave"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/glineMtoDptos"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvDptoNombre" />
+
+    <EditText
+        android:id="@+id/etDptoClave"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="128dp"
+        android:ems="10"
+        android:importantForAutofill="no"
+        android:inputType="textNoSuggestions|textPassword"
+        android:minHeight="48dp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tvDptoClave"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/glineMtoDptos"
+        tools:ignore="DuplicateSpeakableTextCheck" />
+
+    <Button
+        android:id="@+id/btDptoCancelar"
+        style="@style/StyleButtons"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="@string/bt_Cancelar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btDptoAceptar"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="TextContrastCheck" />
+
+    <Button
+        android:id="@+id/btDptoAceptar"
+        style="@style/StyleButtons"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="@string/bt_Aceptar"
+        app:layout_constraintBaseline_toBaselineOf="@+id/btDptoCancelar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/btDptoCancelar"
+        tools:ignore="TextContrastCheck" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/glineMtoDptos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.3" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

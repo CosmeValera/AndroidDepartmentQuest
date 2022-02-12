@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".vista.fragmentos.LoginFragment">
+
+    <TextView
+        android:id="@+id/tvLoginCabecera"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="8dp"
+        android:background="@color/colorPrimary"
+        android:gravity="center_horizontal"
+        android:text="@string/tv_Login_Cabecera"
+        android:textColor="@android:color/white"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="TextContrastCheck" />
+
+    <TextView
+        android:id="@+id/tvLoginDptos"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="128dp"
+        android:layout_marginTop="64dp"
+        android:layout_marginEnd="8dp"
+        android:text="@string/tv_Login_Dptos"
+        app:layout_constraintEnd_toEndOf="@id/glineLogin"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvLoginCabecera" />
+
+    <Spinner
+        android:id="@+id/spLoginDptos"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="128dp"
+        android:minHeight="48dp"
+        app:layout_constraintBottom_toBottomOf="@+id/tvLoginDptos"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/glineLogin"
+        app:layout_constraintTop_toTopOf="@+id/tvLoginDptos"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <TextView
+        android:id="@+id/tvLoginClave"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="128dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="8dp"
+        android:labelFor="@id/etLoginClave"
+        android:text="@string/tv_Login_Clave"
+        app:layout_constraintEnd_toStartOf="@+id/glineLogin"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvLoginDptos" />
+
+    <EditText
+        android:id="@+id/etLoginClave"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="128dp"
+        android:ems="10"
+        android:imeOptions="flagNoFullscreen"
+        android:importantForAutofill="no"
+        android:inputType="textNoSuggestions|textPassword"
+        android:minHeight="48dp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tvLoginClave"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/glineLogin"
+        tools:ignore="DuplicateSpeakableTextCheck" />
+
+    <Button
+        android:id="@+id/btLoginCancelar"
+        style="@style/StyleButtons"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="128dp"
+        android:layout_marginTop="64dp"
+        android:text="@string/bt_Cancelar"
+        app:layout_constraintEnd_toStartOf="@+id/btLoginAceptar"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvLoginClave"
+        tools:ignore="TextContrastCheck" />
+
+    <Button
+        android:id="@+id/btLoginAceptar"
+        style="@style/StyleButtons"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="128dp"
+        android:text="@string/bt_Aceptar"
+        app:layout_constraintBaseline_toBaselineOf="@+id/btLoginCancelar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/btLoginCancelar"
+        tools:ignore="TextContrastCheck" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/glineLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.3" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
