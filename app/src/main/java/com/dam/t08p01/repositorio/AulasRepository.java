@@ -14,6 +14,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.ListenerRegistration;
@@ -77,6 +78,7 @@ public class AulasRepository {
     }
 
     private class FirebaseLiveDataME extends LiveData<List<Aula>> {
+//        Aqui implementamos nuestro propoio livedata, onActive sirve para lo que hace cuando
         private ListenerRegistration reg;
         private final FiltroAulas mFiltroAulas;
 
@@ -94,6 +96,7 @@ public class AulasRepository {
                 query = query.orderBy("id")
                         .whereEqualTo("idDpto", mFiltroAulas.getIdDpto());
             }
+            //En este callback es donde se devuelven los datos
             reg = query.addSnapshotListener(aulasME_EventListener);
         }
 
@@ -121,11 +124,41 @@ public class AulasRepository {
     /* Métodos Lógica Aulas ***********************************************************************/
 
     public LiveData<List<Aula>> recuperarAulasSE(FiltroAulas filtroAulas) {
+//        Con esta sola linea ya se hace pero necesita el livedata interno que ya esta hecho
         return new AulasRepository.FirebaseLiveDataSE(filtroAulas);
+
+////        Como se haría en unprincio, con esto no hace falta el livedata interno. Con lo de arriba sí, pero ya esta hecho
+////        addOnCompleteListener lanza un procesos asincrono que tambien esta a la escuah(como un observer pero para Firebase)
+//        MutableLiveData<List<Aula>> result = new MutableLiveData<>();
+//        mAppDB.getRefFS().collection("aulas").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//            @Override
+//            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                    List<Aula> aulas = new ArrayList<>();
+//                    for (QueryDocumentSnapshot qds : task.getResult()) {
+//                        aulas.add(qds.toObject(Aula.class));
+//                    }
+//                    result.postValue(aulas);
+//            }
+//        });
+//        return result;
     }
 
     public LiveData<List<Aula>> recuperarAulasME(FiltroAulas filtroAulas) {
+//        Con esta sola linea ya se hace pero necesita el livedata interno que ya esta hecho
         return new AulasRepository.FirebaseLiveDataME(filtroAulas);
+
+//        MutableLiveData<List<Aula>> result = new MutableLiveData<>();
+//        mAppDB.getRefFS().collection("aulas").addSnapshotListener(new EventListener<QuerySnapshot>() {
+//            @Override
+//            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+//                List<Aula> aulas = new ArrayList<>();
+//                for (DocumentSnapshot qds : value.getDocuments()) {
+//                    aulas.add(qds.toObject(Aula.class));
+//                }
+//                result.postValue(aulas);
+//            }
+//        });
+//        return result;
     }
 
     public LiveData<Boolean> altaAula(@NonNull Aula aula) {
