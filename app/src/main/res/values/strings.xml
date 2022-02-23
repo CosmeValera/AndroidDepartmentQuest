@@ -168,4 +168,5 @@
     <string name="splashApp_summary">Establece a 3 sg la duración del Splash</string>
     <string name="splashApp_default">false</string>
 
+    <string name="producto_FecAlta_Placeholder"> </string>
 </resources>

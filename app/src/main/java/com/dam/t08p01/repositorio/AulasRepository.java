@@ -163,7 +163,7 @@ public class AulasRepository {
 
     public LiveData<Boolean> altaAula(@NonNull Aula aula) {
         MutableLiveData<Boolean> result = new MutableLiveData<>();
-        mAppDB.getRefFS().collection("aulas").document(aula.getIdDpto() + aula.getId()).set(aula)
+        mAppDB.getRefFS().collection("aulas").document(aula.getIdDpto() + "-" + aula.getId()).set(aula)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
@@ -181,7 +181,7 @@ public class AulasRepository {
 
     public LiveData<Boolean> editarAula(@NonNull Aula aula) {
         MutableLiveData<Boolean> result = new MutableLiveData<>();
-        mAppDB.getRefFS().collection("aulas").document(aula.getIdDpto() + aula.getId()).set(aula, SetOptions.merge())
+        mAppDB.getRefFS().collection("aulas").document(aula.getIdDpto() + "-" + aula.getId()).set(aula, SetOptions.merge())
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
@@ -199,7 +199,7 @@ public class AulasRepository {
 
     public LiveData<Boolean> bajaAula(@NonNull Aula aula) {
         MutableLiveData<Boolean> result = new MutableLiveData<>();
-        mAppDB.getRefFS().collection("aulas").document(aula.getIdDpto() + aula.getId()).delete()
+        mAppDB.getRefFS().collection("aulas").document(aula.getIdDpto() + "-" + aula.getId()).delete()
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
