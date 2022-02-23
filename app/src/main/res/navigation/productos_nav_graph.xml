@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/productos_nav_graph.xml"
+    app:startDestination="@id/bus_productos_fragment">
+
+
+    <fragment
+        android:id="@+id/mto_productos_fragment"
+        android:name="com.dam.t07p01.vista.fragmentos.MtoProductosFragment"/>
+    <fragment
+        android:id="@+id/bus_productos_fragment"
+        android:name="com.dam.t07p01.vista.fragmentos.BusProductosFragment">
+        <action
+            android:id="@+id/action_bus_productos_fragment_to_mto_productos_fragment"
+            app:destination="@id/mto_productos_fragment" />
+        <action
+            android:id="@+id/action_bus_productos_fragment_to_filtroProductosFragment"
+            app:destination="@id/filtroProductosFragment" />
+    </fragment>
+    <dialog
+        android:id="@+id/dlgConfirmacionProductos"
+        android:name="com.dam.t07p01.vista.dialogos.DlgConfirmacion" />
+    <action
+        android:id="@+id/action_global_dlgConfirmacionProductos"
+        app:destination="@+id/dlgConfirmacionProductos" />
+    <fragment
+        android:id="@+id/filtroProductosFragment"
+        android:name="com.dam.t07p01.vista.fragmentos.FiltroProductosFragment">
+        <action
+            android:id="@+id/action_filtroProductosFragment_to_bus_productos_fragment"
+            app:destination="@id/bus_productos_fragment"
+            app:popUpTo="@id/bus_productos_fragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <dialog
+        android:id="@+id/dlgSeleccionFecha"
+        android:name="com.dam.t07p01.vista.dialogos.DlgSeleccionFecha"
+        android:label="DlgSeleccionFecha" />
+    <action
+        android:id="@+id/action_global_dlgSeleccionFecha"
+        app:destination="@+id/dlgSeleccionFecha" />
+</navigation>

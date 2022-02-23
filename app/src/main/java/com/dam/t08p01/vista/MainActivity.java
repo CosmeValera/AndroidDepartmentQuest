@@ -290,6 +290,14 @@ public class MainActivity extends AppCompatActivity
             } else {
                 Snackbar.make(binding.getRoot(), R.string.msg_NoLogin, Snackbar.LENGTH_SHORT).show();
             }
+        } else if (item.getItemId() == R.id.nav_productos) {
+            if (mLogin != null) {
+                Intent i = new Intent(MainActivity.this, ProductosActivity.class);
+                i.putExtra("login", mLogin);
+                startActivity(i);
+            } else {
+                Snackbar.make(binding.getRoot(), R.string.msg_NoLogin, Snackbar.LENGTH_SHORT).show();
+            }
         } else {
             return false;
         }

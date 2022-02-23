@@ -21,108 +21,73 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="TextContrastCheck" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/tvFiltroDptos"
+        android:id="@+id/tvFecAlta"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="64dp"
         android:layout_marginEnd="8dp"
-        android:text="@string/tv_Filtro_Dpto"
+        android:text="@string/tv_Filtro_FecAlta"
         app:layout_constraintEnd_toStartOf="@+id/glineFiltro1"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvFiltroCabecera" />
 
-    <Spinner
-        android:id="@+id/spFiltroDptos"
+    <EditText
+        android:id="@+id/etFecAlta"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:autofillHints=""
+        android:ems="10"
+        android:enabled="false"
+        android:inputType="date"
+        android:minHeight="48dp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tvFecAlta"
+        app:layout_constraintEnd_toStartOf="@+id/glineFiltro2"
+        app:layout_constraintStart_toStartOf="@+id/glineFiltro1"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <Button
+        android:id="@+id/btFecAlta"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="32dp"
-        android:minHeight="48dp"
-        app:layout_constraintBottom_toBottomOf="@+id/tvFiltroDptos"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tvFecAlta"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/glineFiltro1"
-        app:layout_constraintTop_toTopOf="@+id/tvFiltroDptos"
-        app:layout_constraintVertical_bias="0.448"
-        tools:ignore="SpeakableTextPresentCheck" />
+        app:layout_constraintStart_toStartOf="@+id/glineFiltro2"
+        tools:ignore="TextContrastCheck" />
 
     <TextView
-        android:id="@+id/tvFiltroAulas"
+        android:id="@+id/tvAulas"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="40dp"
         android:layout_marginEnd="8dp"
         android:text="@string/tv_Filtro_Aula"
         app:layout_constraintEnd_toStartOf="@+id/glineFiltro1"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvFiltroDptos" />
+        app:layout_constraintTop_toBottomOf="@+id/tvFecAlta" />
 
     <Spinner
-        android:id="@+id/spFiltroAulas"
+        android:id="@+id/spAulas"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="32dp"
         android:minHeight="48dp"
-        app:layout_constraintBottom_toBottomOf="@+id/tvFiltroAulas"
+        app:layout_constraintBottom_toBottomOf="@+id/tvAulas"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="@+id/glineFiltro1"
-        app:layout_constraintTop_toTopOf="@+id/tvFiltroAulas"
-        app:layout_constraintVertical_bias="0.482"
+        app:layout_constraintTop_toTopOf="@+id/tvAulas"
         tools:ignore="SpeakableTextPresentCheck" />
-
-    <TextView
-        android:id="@+id/tvFiltroFecAlta"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="8dp"
-        android:labelFor="@id/etFiltroFecAlta"
-        android:text="@string/tv_Filtro_FecAlta"
-        app:layout_constraintEnd_toStartOf="@+id/glineFiltro1"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvFiltroAulas" />
-
-    <EditText
-        android:id="@+id/etFiltroFecAlta"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:ems="10"
-        android:focusable="false"
-        android:importantForAutofill="no"
-        android:inputType="text|textNoSuggestions"
-        android:minHeight="48dp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/tvFiltroFecAlta"
-        app:layout_constraintEnd_toStartOf="@+id/glineFiltro2"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/glineFiltro1"
-        tools:ignore="DuplicateSpeakableTextCheck" />
-
-    <Button
-        android:id="@+id/btFiltroFecAlta"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="32dp"
-        android:text="@string/bt_Filtro_FecAlta"
-        app:layout_constraintBaseline_toBaselineOf="@+id/etFiltroFecAlta"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/glineFiltro2"
-        tools:ignore="TouchTargetSizeCheck,TextContrastCheck" />
 
     <Button
         android:id="@+id/btFiltroCancelar"
@@ -164,6 +129,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.8" />
+        app:layout_constraintGuide_percent="0.78" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

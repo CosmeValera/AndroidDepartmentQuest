@@ -1,5 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/DAM/Desktop/Cosme Local/Android-Departments-Apppp/app/src/main/res/layout/content_productos.xml" value="0.1" />
+        <entry key="..\:/Users/DAM/Desktop/Cosme Local/Android-Departments-Apppp/app/src/main/res/layout/content_rv_productos.xml" value="0.1" />
+        <entry key="..\:/Users/DAM/Desktop/Cosme Local/Android-Departments-Apppp/app/src/main/res/layout/fragment_bus_productos.xml" value="0.1" />
+        <entry key="..\:/Users/DAM/Desktop/Cosme Local/Android-Departments-Apppp/app/src/main/res/layout/fragment_filtro_producto.xml" value="0.1" />
+        <entry key="..\:/Users/DAM/Desktop/Cosme Local/Android-Departments-Apppp/app/src/main/res/layout/fragment_filtro_productos.xml" value="0.1" />
+        <entry key="..\:/Users/DAM/Desktop/Cosme Local/Android-Departments-Apppp/app/src/main/res/layout/fragment_mto_productos.xml" value="0.28125" />
+        <entry key="..\:/Users/DAM/Desktop/Cosme Local/Android-Departments-Apppp/app/src/main/res/menu/menu_bus_productos.xml" value="0.1" />
+        <entry key="..\:/Users/DAM/Desktop/Cosme Local/Android-Departments-Apppp/app/src/main/res/menu/menu_main.xml" value="0.28125" />
+        <entry key="..\:/Users/DAM/Desktop/Cosme Local/Android-Departments-Apppp/app/src/main/res/menu/menu_nav.xml" value="0.28125" />
+      </map>
+    </option>
+  </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
