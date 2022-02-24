@@ -89,11 +89,15 @@ public class ProductosRepository {
         protected void onActive() {
             super.onActive();
             Query query = mAppDB.getRefFS().collection("productos");
-            if (mFiltroProductos.getIdAula().equals("")) {   // todos los dptos
-                query = query.orderBy("idAula").orderBy("id");
+            if (mFiltroProductos.getIdAula().equals("")) {   // todas las aulas
+                query = query
+                        .whereGreaterThanOrEqualTo("fecAlta", mFiltroProductos.getFecAlta())
+                        .orderBy("fecAlta").orderBy("idAula").orderBy("id");
             } else {
-                query = query.orderBy("id")
-                        .whereEqualTo("idAula", mFiltroProductos.getIdAula());
+                query = query
+                        .whereGreaterThanOrEqualTo("fecAlta", mFiltroProductos.getFecAlta())
+                        .whereEqualTo("idAula", mFiltroProductos.getIdAula())
+                        .orderBy("fecAlta").orderBy("idAula").orderBy("id");
             }
             //En este callback es donde se devuelven los datos
             reg = query.addSnapshotListener(productosME_EventListener);

@@ -78,6 +78,9 @@ public class MtoProductosFragment extends Fragment {
         ArrayAdapter<Aula> aulasAdapter = new ArrayAdapter<>(requireActivity(), android.R.layout.simple_list_item_1);
         aulasAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
+        //Recuperar aulas de Firebase
+
+
         //Aulas observer
         aulasVM.getAulas().observe(this, new Observer<List<Aula>>() {
             @Override

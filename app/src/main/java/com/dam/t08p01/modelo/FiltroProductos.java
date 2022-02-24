@@ -14,7 +14,7 @@ public class FiltroProductos {
     public FiltroProductos() {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd", Locale.getDefault());
         this.fecAlta = sdf.format(Calendar.getInstance().getTime());
-        this.idAula = "%";
+        this.idAula = "";
     }
 
     public FiltroProductos(String idAula, String fecAlta) {
