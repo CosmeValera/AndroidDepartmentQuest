@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.dam.t08p01.R;
 import com.dam.t08p01.databinding.FragmentBusProductosBinding;
+import com.dam.t08p01.modelo.Aula;
 import com.dam.t08p01.modelo.Producto;
 import com.dam.t08p01.vista.adaptadores.AdaptadorProductos;
 import com.dam.t08p01.vistamodelo.ProductosViewModel;
@@ -201,6 +202,16 @@ public class BusProductosFragment extends Fragment
 //                    Producto prodAPasar = productoVista.getProducto();
 //
 //                    mCallback.onEditarBusProductosFrag(prodAPasar);
+
+
+                    //Al editar un producto que te salga puesto de antes el aula que tiene
+                    ProductosViewModel productosVM = new ViewModelProvider(requireActivity()).get(ProductosViewModel.class);
+                    Aula aulaConIdParaMto = new Aula();
+                    Producto prod = mAdaptadorProductos.getItem(pos);
+                    aulaConIdParaMto.setId(prod.getIdAula());
+                    productosVM.setAulaSeleccionadaMto(aulaConIdParaMto);
+
+
                     mCallback.onEditarBusProductosFrag(mAdaptadorProductos.getItem(pos));
                 }
             }

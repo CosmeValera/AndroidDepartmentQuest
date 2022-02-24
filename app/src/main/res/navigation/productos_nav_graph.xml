@@ -8,10 +8,10 @@
 
     <fragment
         android:id="@+id/mto_productos_fragment"
-        android:name="com.dam.t07p01.vista.fragmentos.MtoProductosFragment"/>
+        android:name="com.dam.t08p01.vista.fragmentos.MtoProductosFragment"/>
     <fragment
         android:id="@+id/bus_productos_fragment"
-        android:name="com.dam.t07p01.vista.fragmentos.BusProductosFragment">
+        android:name="com.dam.t08p01.vista.fragmentos.BusProductosFragment">
         <action
             android:id="@+id/action_bus_productos_fragment_to_mto_productos_fragment"
             app:destination="@id/mto_productos_fragment" />
@@ -21,13 +21,13 @@
     </fragment>
     <dialog
         android:id="@+id/dlgConfirmacionProductos"
-        android:name="com.dam.t07p01.vista.dialogos.DlgConfirmacion" />
+        android:name="com.dam.t08p01.vista.dialogos.DlgConfirmacion" />
     <action
         android:id="@+id/action_global_dlgConfirmacionProductos"
         app:destination="@+id/dlgConfirmacionProductos" />
     <fragment
         android:id="@+id/filtroProductosFragment"
-        android:name="com.dam.t07p01.vista.fragmentos.FiltroProductosFragment">
+        android:name="com.dam.t08p01.vista.fragmentos.FiltroProductosFragment">
         <action
             android:id="@+id/action_filtroProductosFragment_to_bus_productos_fragment"
             app:destination="@id/bus_productos_fragment"
@@ -36,7 +36,7 @@
     </fragment>
     <dialog
         android:id="@+id/dlgSeleccionFecha"
-        android:name="com.dam.t07p01.vista.dialogos.DlgSeleccionFecha"
+        android:name="com.dam.t08p01.vista.dialogos.DlgSeleccionFecha"
         android:label="DlgSeleccionFecha" />
     <action
         android:id="@+id/action_global_dlgSeleccionFecha"

@@ -34,6 +34,13 @@
             android:parentActivityName=".vista.MainActivity"
             android:theme="@style/Theme.T08p01.NoActionBar"
             android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".vista.ProductosActivity"
+            android:exported="false"
+            android:label="@string/title_activity_productos"
+            android:parentActivityName=".vista.MainActivity"
+            android:theme="@style/Theme.T08p01.NoActionBar"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
     </application>
 
 </manifest>

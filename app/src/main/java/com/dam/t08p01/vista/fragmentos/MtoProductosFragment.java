@@ -6,7 +6,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Adapter;
 import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -23,6 +25,7 @@ import com.dam.t08p01.vistamodelo.AulasViewModel;
 import com.dam.t08p01.vistamodelo.ProductosViewModel;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
@@ -95,6 +98,43 @@ public class MtoProductosFragment extends Fragment {
                 }
             }
         });
+
+        ProductosViewModel productosVM = new ViewModelProvider(requireActivity()).get(ProductosViewModel.class);
+        //Recordar aulas
+        productosVM.getAulaSeleccionadaMto().observe(this, new Observer<Aula>() {
+            @Override
+            public void onChanged(Aula aula) {
+                String aulaId = aula.getId();
+                List<Aula> aulas = devolverTodasLasAulas(binding.spAulas);
+                int posicion = devolverPosicionAulaConMismoId(aulas, aulaId);
+
+                binding.spAulas.setSelection(posicion);
+            }
+        });
+    }
+
+    private List<Aula> devolverTodasLasAulas(Spinner spAulas) {
+        Adapter adapter = spAulas.getAdapter();
+        if (adapter == null) { //Esto es para cuando no hay ningún producto en un aula
+            return new ArrayList<>();
+        }
+        int cantidadAulas = adapter.getCount();
+        List<Aula> aulas = new ArrayList<>(cantidadAulas);
+        for (int i = 0; i < cantidadAulas; i++) {
+            Aula aula = (Aula) adapter.getItem(i);
+            aulas.add(aula);
+        }
+        return aulas;
+    }
+
+    private int devolverPosicionAulaConMismoId(List<Aula> aulas, String aulaId) {
+        if (aulaId.equals("")) return 0;
+        for (int i = 0; i < aulas.size(); i++) {
+            if (aulas.get(i).getId().equals(aulaId)) {
+                return i;
+            }
+        }
+        return 0;
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

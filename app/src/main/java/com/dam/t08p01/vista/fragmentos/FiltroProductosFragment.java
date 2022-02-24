@@ -100,7 +100,7 @@ public class FiltroProductosFragment extends Fragment {
 
         //Recordar aula
 //
-        productosVM.getAulaSeleccionada().observe(this, new Observer<Aula>() {
+        productosVM.getAulaSeleccionadaFiltro().observe(this, new Observer<Aula>() {
             @Override
             public void onChanged(Aula aula) {
                 String aulaId = aula.getId();
@@ -241,13 +241,13 @@ public class FiltroProductosFragment extends Fragment {
             if (sp.getSelectedItem().toString().equalsIgnoreCase("")) {
                 //Aula vacia, guardamos ese aula en el VM para que luego recuerde que pusimos el aula vacia
                 ProductosViewModel productosVM = new ViewModelProvider(requireActivity()).get(ProductosViewModel.class);
-                productosVM.setAulaSeleccionada(new Aula());
+                productosVM.setAulaSeleccionadaFiltro(new Aula());
             } else {
                 sp.getSelectedItem().toString();
 //                Snackbar.make(binding.getRoot(), sp.getSelectedItem().toString(), BaseTransientBottomBar.LENGTH_SHORT).show();
                 Aula aula = (Aula)sp.getSelectedItem();
                 ProductosViewModel productosVM = new ViewModelProvider(requireActivity()).get(ProductosViewModel.class);
-                productosVM.setAulaSeleccionada(aula);
+                productosVM.setAulaSeleccionadaFiltro(aula);
             }
         }
 

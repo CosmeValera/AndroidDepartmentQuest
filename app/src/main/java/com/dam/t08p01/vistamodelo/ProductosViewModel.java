@@ -24,8 +24,9 @@ public class ProductosViewModel extends AndroidViewModel {
     private Departamento mLogin;
     private Producto mProductoAEliminar;
 
-    // (LiveData y crear observer) que recuerde el aula seleccionada, para que cuando gires el movil no se pierda el dato
-    private MutableLiveData<Aula> aulaSeleccionada;
+    // (LiveData y observer) recordar aula seleccionada para que cuando gires el movil no se pierda el dato
+    private final MutableLiveData<Aula> aulaSeleccionadaFiltro; //Esta es para FiltroProductosFragment
+    private final MutableLiveData<Aula> aulaSeleccionadaMto; //Esta es para MtoProductosFragment
 
     private final MutableLiveData<String> mFechaDlg;
     private final FiltroProductos mProductoFiltro;
@@ -34,9 +35,10 @@ public class ProductosViewModel extends AndroidViewModel {
         super(application);
         mProductosRep = new ProductosRepository(application);
         mProductoFiltro = new FiltroProductos();
-        aulaSeleccionada = new MutableLiveData<>();
+        aulaSeleccionadaFiltro = new MutableLiveData<>();
+        aulaSeleccionadaMto = new MutableLiveData<>();
 //        mProductos = null;
-        mProductos = mProductosRep.recuperarProductosFiltro(mProductoFiltro.getFecAlta(),mProductoFiltro.getIdAula());
+        mProductos = mProductosRep.recuperarProductosME(mProductoFiltro);
         mLogin = null;
         mProductoAEliminar = null;
         mFechaDlg = new MutableLiveData<>();
@@ -54,11 +56,7 @@ public class ProductosViewModel extends AndroidViewModel {
 //    }
 
     public LiveData<List<Producto>> getProductosByFiltro() {
-
-        String fecAlta = mProductoFiltro.getFecAlta();
-//        String idAula = mProductoFiltro.getIdAula();
-        String idAula = (mProductoFiltro.getIdAula().equals(""))?"%":mProductoFiltro.getIdAula();
-        mProductos = mProductosRep.recuperarProductosFiltro(fecAlta, idAula);
+        mProductos = mProductosRep.recuperarProductosME(mProductoFiltro);
         //Con este return lo que hacemos es pasarselo como parametro al observer, no se pone
         // como una asignacino pq al usar un observer es unproceso asincrono
         return mProductos;
@@ -111,11 +109,19 @@ public class ProductosViewModel extends AndroidViewModel {
         this.mProductoFiltro.setIdAula(idAula);
     }
 
-    public MutableLiveData<Aula> getAulaSeleccionada() {
-        return aulaSeleccionada;
+    public MutableLiveData<Aula> getAulaSeleccionadaFiltro() {
+        return aulaSeleccionadaFiltro;
     }
 
-    public void setAulaSeleccionada(Aula aulaSeleccionada) {
-        this.aulaSeleccionada.setValue(aulaSeleccionada);
+    public void setAulaSeleccionadaFiltro(Aula aulaSeleccionadaFiltro) {
+        this.aulaSeleccionadaFiltro.setValue(aulaSeleccionadaFiltro);
     }
+
+    public MutableLiveData<Aula> getAulaSeleccionadaMto() {
+        return aulaSeleccionadaMto;
+    }
+    public void setAulaSeleccionadaMto(Aula aulaSeleccionadaMto) {
+        this.aulaSeleccionadaMto.setValue(aulaSeleccionadaMto);
+    }
+
 }
