@@ -96,6 +96,7 @@ public class ProductosRepository {
 
         @Override
         protected void onActive() {
+//            TODO filtrar tambien que tenga el mismo departamento, para que a mates solo le salgan sus productos
             super.onActive();
             Query query = mAppDB.getRefFS().collection("productos");
             if (mFiltroProductos.getIdAula().equals("")) {   // todas las aulas

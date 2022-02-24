@@ -15,6 +15,9 @@ public class Producto implements Parcelable {
     private String idAula; //FK
     private int cantidad;
 
+    private double latitud;
+    private double longitud;
+
     //Constructores
     public Producto() {
         idDpto = 0;
@@ -23,15 +26,8 @@ public class Producto implements Parcelable {
         nombre = "";
         idAula = "";
         cantidad = 0;
-    }
-
-    protected Producto(Parcel in) {
-        idDpto = in.readInt();
-        id = in.readString();
-        fecAlta = in.readString();
-        nombre = in.readString();
-        idAula = in.readString();
-        cantidad = in.readInt();
+        latitud = 0;
+        longitud = 0;
     }
 
     //getters & setters
@@ -95,19 +91,32 @@ public class Producto implements Parcelable {
         this.cantidad = cantidad;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
+    public double getLatitud() {
+        return latitud;
     }
 
-    @Override
-    public void writeToParcel(@NonNull Parcel parcel, int i) {
-        parcel.writeInt(idDpto);
-        parcel.writeString(id);
-        parcel.writeString(fecAlta);
-        parcel.writeString(nombre);
-        parcel.writeString(idAula);
-        parcel.writeInt(cantidad);
+    public void setLatitud(double latitud) {
+        this.latitud = latitud;
+    }
+
+    public double getLongitud() {
+        return longitud;
+    }
+
+    public void setLongitud(double longitud) {
+        this.longitud = longitud;
+    }
+
+    //Parcelable
+    protected Producto(Parcel in) {
+        idDpto = in.readInt();
+        id = in.readString();
+        fecAlta = in.readString();
+        nombre = in.readString();
+        idAula = in.readString();
+        cantidad = in.readInt();
+        latitud = in.readDouble();
+        longitud = in.readDouble();
     }
 
     public static final Creator<Producto> CREATOR = new Creator<Producto>() {
@@ -122,10 +131,29 @@ public class Producto implements Parcelable {
         }
     };
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(idDpto);
+        parcel.writeString(id);
+        parcel.writeString(fecAlta);
+        parcel.writeString(nombre);
+        parcel.writeString(idAula);
+        parcel.writeInt(cantidad);
+        parcel.writeDouble(latitud);
+        parcel.writeDouble(longitud);
+    }
+
+
     //Metodos
     @NonNull
     @Override
     public String toString() {
         return nombre;
     }
+
 }
