@@ -12,6 +12,21 @@
             app:title="@string/Firebase_name_title" />
     </PreferenceCategory>
 
+    <PreferenceCategory app:title="@string/category_Registro">
+        <SwitchPreference
+            app:defaultValue="@string/registro_default"
+            app:key="@string/registro_key"
+            app:summary="@string/registro_summary"
+            app:title="@string/registro_title" />
+        <EditTextPreference
+            app:defaultValue="@string/ficheroRegistro_default"
+            app:key="@string/ficheroRegistro_key"
+            app:summary="@string/ficheroRegistro_summary"
+            app:title="@string/ficheroRegistro_title" />
+    </PreferenceCategory>
+
+<!--    TODO: localizacion y mapas -->
+
     <PreferenceCategory app:title="@string/category_Interfaz">
         <SwitchPreferenceCompat
             app:defaultValue="@string/login_default"

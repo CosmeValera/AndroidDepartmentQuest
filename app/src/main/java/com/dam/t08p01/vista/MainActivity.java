@@ -44,6 +44,8 @@ public class MainActivity extends AppCompatActivity
     private MainViewModel mMainVM;
     private Departamento mLogin;
 
+    private SharedPreferences pref;
+
     private static final String TAG_CONFIRMACION_SALIR = "tagConfirmacion_Salir";
     private static final String TAG_CONFIRMACION_BORRARREGISTRO = "tagConfirmacion_BorrarRegistro";
 
@@ -91,7 +93,7 @@ public class MainActivity extends AppCompatActivity
             // Para que cree los valores por defecto correctamente la primera vez al instalar la App,
             // NO debe existir la carpeta /data/data/com.dam.t08p01 !!
             PreferenceManager.setDefaultValues(this, R.xml.prefs, false);
-            SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
+            pref = PreferenceManager.getDefaultSharedPreferences(this);
 
             // Splash
             boolean mostrarSplash = pref.getBoolean(getResources().getString(R.string.splashApp_key), false);
@@ -153,13 +155,6 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.menuSalir) {
@@ -191,6 +186,20 @@ public class MainActivity extends AppCompatActivity
             }
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        MenuItem item = menu.findItem(R.id.menuRegistro); //Find the menu and then enable it if necessary
+        boolean registroDisponible = pref.getBoolean(getResources().getString(R.string.registro_key), false);
+        if (registroDisponible) {
+            item.setEnabled(true);
+        } else {
+            item.setEnabled(false);
+        }
+        return true;
     }
 
     private void mostrarDlgSalir() {

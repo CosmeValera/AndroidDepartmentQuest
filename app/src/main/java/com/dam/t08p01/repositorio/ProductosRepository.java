@@ -1,17 +1,22 @@
 package com.dam.t08p01.repositorio;
 
 import android.app.Application;
+import android.content.Context;
+import android.content.SharedPreferences;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.preference.PreferenceManager;
 
+import com.dam.t08p01.R;
 import com.dam.t08p01.modelo.AppDatabase;
 import com.dam.t08p01.modelo.Aula;
 import com.dam.t08p01.modelo.FiltroProductos;
 import com.dam.t08p01.modelo.Producto;
 
+import com.dam.t08p01.modelo.Registro;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -30,8 +35,12 @@ import java.util.List;
 
 public class ProductosRepository {
     private final AppDatabase mAppDB;
+    private final Context mContext;
+    private final boolean mRegistro;
 
     public ProductosRepository(Application application) {
+        mContext = application.getApplicationContext();
+        mRegistro = PreferenceManager.getDefaultSharedPreferences(mContext).getBoolean(mContext.getResources().getString(R.string.registro_key), false);
         mAppDB = AppDatabase.getAppDatabase(application);
     }
 
@@ -140,6 +149,13 @@ public class ProductosRepository {
                     @Override
                     public void onSuccess(Void unused) {
                         result.postValue(true);
+                        if (mRegistro) {
+                            try {
+                                Registro.guardarRegistro(mContext, producto, "alta", true);
+                            } catch (Exception e) {
+                                //:)
+                            }
+                        }
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -158,6 +174,13 @@ public class ProductosRepository {
                     @Override
                     public void onSuccess(Void unused) {
                         result.postValue(true);
+                        if (mRegistro) {
+                            try {
+                                Registro.guardarRegistro(mContext, producto, "alta", true);
+                            } catch (Exception e) {
+                                //:)
+                            }
+                        }
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -176,6 +199,13 @@ public class ProductosRepository {
                     @Override
                     public void onSuccess(Void unused) {
                         result.postValue(true);
+                        if (mRegistro) {
+                            try {
+                                Registro.guardarRegistro(mContext, producto, "alta", true);
+                            } catch (Exception e) {
+                                //:)
+                            }
+                        }
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
