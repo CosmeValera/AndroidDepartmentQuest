@@ -15,8 +15,8 @@ public class Producto implements Parcelable {
     private String idAula; //FK
     private int cantidad;
 
-    private double latitud;
-    private double longitud;
+//    private double latitud;
+//    private double longitud;
 
     //Constructores
     public Producto() {
@@ -26,8 +26,6 @@ public class Producto implements Parcelable {
         nombre = "";
         idAula = "";
         cantidad = 0;
-        latitud = 0;
-        longitud = 0;
     }
 
     //getters & setters
@@ -90,23 +88,6 @@ public class Producto implements Parcelable {
     public void setCantidad(int cantidad) {
         this.cantidad = cantidad;
     }
-
-    public double getLatitud() {
-        return latitud;
-    }
-
-    public void setLatitud(double latitud) {
-        this.latitud = latitud;
-    }
-
-    public double getLongitud() {
-        return longitud;
-    }
-
-    public void setLongitud(double longitud) {
-        this.longitud = longitud;
-    }
-
     //Parcelable
     protected Producto(Parcel in) {
         idDpto = in.readInt();
@@ -115,8 +96,6 @@ public class Producto implements Parcelable {
         nombre = in.readString();
         idAula = in.readString();
         cantidad = in.readInt();
-        latitud = in.readDouble();
-        longitud = in.readDouble();
     }
 
     public static final Creator<Producto> CREATOR = new Creator<Producto>() {
@@ -144,8 +123,6 @@ public class Producto implements Parcelable {
         parcel.writeString(nombre);
         parcel.writeString(idAula);
         parcel.writeInt(cantidad);
-        parcel.writeDouble(latitud);
-        parcel.writeDouble(longitud);
     }
 
 

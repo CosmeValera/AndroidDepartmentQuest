@@ -55,13 +55,16 @@ public class ProductosRepository {
         @Override
         protected void onActive() {
             super.onActive();
-            Query query = mAppDB.getRefFS().collection("producotos");
-            //Todo no se si es "" o es "0" el id de todas las aulas
-            if (mFiltroProductos.getIdAula().equals("")) { // todas las aulas
-                query = query.orderBy("idAula").orderBy("id");
+            Query query = mAppDB.getRefFS().collection("productos");
+            if (mFiltroProductos.getIdAula().equals("")) {   // todas las aulas
+                query = query
+                        .whereGreaterThanOrEqualTo("fecAlta", mFiltroProductos.getFecAlta())
+                        .orderBy("fecAlta").orderBy("idAula").orderBy("id");
             } else {
-                query = query.orderBy("id")
-                        .whereEqualTo("idDpto", mFiltroProductos.getIdAula());
+                query = query
+                        .whereGreaterThanOrEqualTo("fecAlta", mFiltroProductos.getFecAlta())
+                        .whereEqualTo("idAula", mFiltroProductos.getIdAula())
+                        .orderBy("fecAlta").orderBy("idAula").orderBy("id");
             }
             query.get().addOnCompleteListener(productosSE_OnCompleteListener);
         }
@@ -97,18 +100,36 @@ public class ProductosRepository {
         @Override
         protected void onActive() {
 //            TODO filtrar tambien que tenga el mismo departamento, para que a mates solo le salgan sus productos
+//            Hay que añadir un campo idDpto en filtroProducto
             super.onActive();
             Query query = mAppDB.getRefFS().collection("productos");
-            if (mFiltroProductos.getIdAula().equals("")) {   // todas las aulas
-                query = query
-                        .whereGreaterThanOrEqualTo("fecAlta", mFiltroProductos.getFecAlta())
-                        .orderBy("fecAlta").orderBy("idAula").orderBy("id");
-            } else {
-                query = query
-                        .whereGreaterThanOrEqualTo("fecAlta", mFiltroProductos.getFecAlta())
-                        .whereEqualTo("idAula", mFiltroProductos.getIdAula())
-                        .orderBy("fecAlta").orderBy("idAula").orderBy("id");
+
+            if (mFiltroProductos.getIdDpto().equals("")) { //Todos los departamentos
+                if (mFiltroProductos.getIdAula().equals("")) {   // todas las aulas
+                    query = query
+                            .whereGreaterThanOrEqualTo("fecAlta", mFiltroProductos.getFecAlta())
+                            .orderBy("fecAlta").orderBy("idDpto").orderBy("idAula").orderBy("id");
+                } else {
+                    query = query
+                            .whereGreaterThanOrEqualTo("fecAlta", mFiltroProductos.getFecAlta())
+                            .whereEqualTo("idAula", mFiltroProductos.getIdAula())
+                            .orderBy("fecAlta").orderBy("idDpto").orderBy("id");
+                }
+            } else { //Un departamento
+                if (mFiltroProductos.getIdAula().equals("")) {   // todas las aulas
+                    query = query
+                            .whereGreaterThanOrEqualTo("fecAlta", mFiltroProductos.getFecAlta())
+                            .whereEqualTo("idDpto", mFiltroProductos.getIdDpto())
+                            .orderBy("fecAlta").orderBy("idAula").orderBy("id");
+                } else {
+                    query = query
+                            .whereGreaterThanOrEqualTo("fecAlta", mFiltroProductos.getFecAlta())
+                            .whereEqualTo("idAula", mFiltroProductos.getIdAula())
+                            .whereEqualTo("idDpto", mFiltroProductos.getIdDpto())
+                            .orderBy("fecAlta").orderBy("id");
+                }
             }
+
             //En este callback es donde se devuelven los datos
             reg = query.addSnapshotListener(productosME_EventListener);
         }

@@ -27,6 +27,7 @@ import com.dam.t08p01.vista.dialogos.DlgConfirmacion;
 import com.dam.t08p01.vista.fragmentos.LoginFragment;
 import com.dam.t08p01.vista.fragmentos.RegistroFragment;
 import com.dam.t08p01.vistamodelo.MainViewModel;
+import com.dam.t08p01.vistamodelo.ProductosViewModel;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
@@ -331,6 +332,12 @@ public class MainActivity extends AppCompatActivity
         }
         mLogin = dpto;
         mMainVM.setLogin(mLogin);   // Guardamos el login en el ViewModel
+
+        //guardamos el dpto en el producosVM
+        ProductosViewModel mProductosVM = new ViewModelProvider(this).get(ProductosViewModel.class);
+        mProductosVM.getmProductoFiltro().setIdDpto(mLogin.getId());
+
+
         Snackbar.make(binding.getRoot(), R.string.msg_LoginOK, Snackbar.LENGTH_SHORT).show();
         // Cerramos LoginFragment
         mNavC.navigateUp();

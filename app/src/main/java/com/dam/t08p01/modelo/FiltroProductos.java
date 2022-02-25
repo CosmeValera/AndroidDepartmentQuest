@@ -9,17 +9,25 @@ import java.util.Locale;
 
 public class FiltroProductos {
     private String fecAlta;
-    private String idAula;
+    private String idAula;;
+    private String idDpto;
 
     public FiltroProductos() {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd", Locale.getDefault());
         this.fecAlta = sdf.format(Calendar.getInstance().getTime());
         this.idAula = "";
+        this.idDpto = "";
     }
 
     public FiltroProductos(String idAula, String fecAlta) {
         this.fecAlta = fecAlta;
         this.idAula = idAula;
+        this.idDpto = "";
+    }
+    public FiltroProductos(String idAula, String fecAlta, String idDpto) {
+        this.fecAlta = fecAlta;
+        this.idAula = idAula;
+        this.idDpto = idDpto;
     }
 
     public String getFecAlta() {
@@ -52,5 +60,13 @@ public class FiltroProductos {
 
     public void setIdAula(String idAula) {
         this.idAula = idAula;
+    }
+
+    public String getIdDpto() {
+        return idDpto;
+    }
+
+    public void setIdDpto(String idDpto) {
+        this.idDpto = idDpto;
     }
 }
