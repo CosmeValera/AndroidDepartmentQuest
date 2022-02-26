@@ -22,6 +22,7 @@ import com.dam.t08p01.vista.dialogos.DlgSeleccionFecha;
 import com.dam.t08p01.vista.fragmentos.BusProductosFragment;
 import com.dam.t08p01.vista.fragmentos.FiltroProductosFragment;
 import com.dam.t08p01.vista.fragmentos.MtoProductosFragment;
+import com.dam.t08p01.vistamodelo.MainViewModel;
 import com.dam.t08p01.vistamodelo.ProductosViewModel;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -52,6 +53,9 @@ public class ProductosActivity extends AppCompatActivity
                 mLogin = b.getParcelable("login");
                 mProductosVM = new ViewModelProvider(this).get(ProductosViewModel.class);
                 mProductosVM.setLogin(mLogin);      // Guardamos el login en el ViewModel
+
+                //todo: lo ponermos aqui los datos del filtro
+                mProductosVM.getmProductoFiltro().setIdDpto(mLogin.getId());
             }
         }
         if (mLogin == null) {   // Esto no debería pasar nunca!!
@@ -235,7 +239,12 @@ public class ProductosActivity extends AppCompatActivity
     public void onAceptarFiltroProductosFrag(String fecAlta, String idAula) {
         mProductosVM.getmProductoFiltro().setFecAlta(fecAlta);
         mProductosVM.getmProductoFiltro().setIdAula(idAula);
-        mProductosVM.getmProductoFiltro().setIdDpto("123");
+
+        //Asignar departamento en el viewmovel de productos
+        MainViewModel mMainVM = new ViewModelProvider(this).get(MainViewModel.class);
+        mLogin = mMainVM.getLogin();
+        mProductosVM.getmProductoFiltro().setIdDpto(mLogin.getId());
+
 //        mProductosVM.getProductosByFiltro();
         mNavC.navigate(R.id.action_filtroProductosFragment_to_bus_productos_fragment);
     }

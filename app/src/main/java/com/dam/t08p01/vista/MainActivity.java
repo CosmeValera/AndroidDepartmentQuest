@@ -333,9 +333,10 @@ public class MainActivity extends AppCompatActivity
         mLogin = dpto;
         mMainVM.setLogin(mLogin);   // Guardamos el login en el ViewModel
 
+        //todo: esto aqui no funcinoa ya que al hacer click en productos se crea un nuevo productosViewModel
         //guardamos el dpto en el producosVM
-        ProductosViewModel mProductosVM = new ViewModelProvider(this).get(ProductosViewModel.class);
-        mProductosVM.getmProductoFiltro().setIdDpto(dpto.getId());
+//        ProductosViewModel mProductosVM = new ViewModelProvider(this).get(ProductosViewModel.class);
+//        mProductosVM.getmProductoFiltro().setIdDpto(dpto.getId());
 
 
         Snackbar.make(binding.getRoot(), R.string.msg_LoginOK, Snackbar.LENGTH_SHORT).show();
