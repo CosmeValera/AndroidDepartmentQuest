@@ -335,7 +335,7 @@ public class MainActivity extends AppCompatActivity
 
         //guardamos el dpto en el producosVM
         ProductosViewModel mProductosVM = new ViewModelProvider(this).get(ProductosViewModel.class);
-        mProductosVM.getmProductoFiltro().setIdDpto(mLogin.getId());
+        mProductosVM.getmProductoFiltro().setIdDpto(dpto.getId());
 
 
         Snackbar.make(binding.getRoot(), R.string.msg_LoginOK, Snackbar.LENGTH_SHORT).show();

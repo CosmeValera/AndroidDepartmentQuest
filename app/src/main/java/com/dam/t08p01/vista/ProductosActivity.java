@@ -235,6 +235,7 @@ public class ProductosActivity extends AppCompatActivity
     public void onAceptarFiltroProductosFrag(String fecAlta, String idAula) {
         mProductosVM.getmProductoFiltro().setFecAlta(fecAlta);
         mProductosVM.getmProductoFiltro().setIdAula(idAula);
+        mProductosVM.getmProductoFiltro().setIdDpto("123");
 //        mProductosVM.getProductosByFiltro();
         mNavC.navigate(R.id.action_filtroProductosFragment_to_bus_productos_fragment);
     }

@@ -104,10 +104,10 @@ public class ProductosViewModel extends AndroidViewModel {
         this.mFechaDlg.setValue(mFechaDlg);
     }
 
-    public void setmProductoFiltro(String idAula, String fecAlta) {
-        this.mProductoFiltro.setFecAlta(fecAlta);
-        this.mProductoFiltro.setIdAula(idAula);
-    }
+//    public void setmProductoFiltro(String idAula, String fecAlta) {
+//        this.mProductoFiltro.setFecAlta(fecAlta);
+//        this.mProductoFiltro.setIdAula(idAula);
+//    }
 
     public MutableLiveData<Aula> getAulaSeleccionadaFiltro() {
         return aulaSeleccionadaFiltro;

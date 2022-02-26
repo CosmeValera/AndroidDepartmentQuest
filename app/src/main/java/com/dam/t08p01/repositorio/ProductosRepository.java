@@ -104,7 +104,9 @@ public class ProductosRepository {
             super.onActive();
             Query query = mAppDB.getRefFS().collection("productos");
 
-            if (mFiltroProductos.getIdDpto().equals("")) { //Todos los departamentos
+            //TODO idDpto is not getting here, it always comes with 0
+            if (mFiltroProductos.getIdDpto().equals("")
+            || mFiltroProductos.getIdDpto().equals("0")) { //Todos los departamentos
                 if (mFiltroProductos.getIdAula().equals("")) {   // todas las aulas
                     query = query
                             .whereGreaterThanOrEqualTo("fecAlta", mFiltroProductos.getFecAlta())

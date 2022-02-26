@@ -59,6 +59,7 @@ public class BusProductosFragment extends Fragment
 
         // Inits
         ProductosViewModel productosVM = new ViewModelProvider(requireActivity()).get(ProductosViewModel.class);
+//        productosVM.getmProductoFiltro().setIdDpto(mLogin.getId());
         mAdaptadorProductos = new AdaptadorProductos(this);
 
         // Inits Productos Observer
