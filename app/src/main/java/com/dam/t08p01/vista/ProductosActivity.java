@@ -241,11 +241,12 @@ public class ProductosActivity extends AppCompatActivity
         mProductosVM.getmProductoFiltro().setIdAula(idAula);
 
         //Asignar departamento en el viewmovel de productos
-        MainViewModel mMainVM = new ViewModelProvider(this).get(MainViewModel.class);
-        mLogin = mMainVM.getLogin();
-        mProductosVM.getmProductoFiltro().setIdDpto(mLogin.getId());
+        mProductosVM.getmProductoFiltro().setIdDpto(mProductosVM.getLogin().getId());
 
-//        mProductosVM.getProductosByFiltro();
+        //Esto no se puede hacer asi pq el login del en mainViewModel viene null
+//        MainViewModel mMainVM = new ViewModelProvider(this).get(MainViewModel.class);
+//        mLogin = mMainVM.getLogin();
+
         mNavC.navigate(R.id.action_filtroProductosFragment_to_bus_productos_fragment);
     }
 
