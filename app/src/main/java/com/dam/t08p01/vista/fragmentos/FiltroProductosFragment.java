@@ -20,8 +20,10 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.dam.t08p01.databinding.FragmentFiltroProductoBinding;
 import com.dam.t08p01.modelo.Aula;
+import com.dam.t08p01.modelo.Departamento;
 import com.dam.t08p01.vista.dialogos.DlgSeleccionFecha;
 import com.dam.t08p01.vistamodelo.AulasViewModel;
+import com.dam.t08p01.vistamodelo.DptosViewModel;
 import com.dam.t08p01.vistamodelo.ProductosViewModel;
 
 import java.text.SimpleDateFormat;
@@ -36,7 +38,8 @@ public class FiltroProductosFragment extends Fragment {
     private FiltroProductosFragmentInterface mCallback;
 
     private Aula mAula;
-    ArrayAdapter<Aula> aulasAdapter;
+    private ArrayAdapter<Aula> mAdaptadorAulas;
+    private ArrayAdapter<Departamento> mAdaptadorDtpos;
 
     public interface FiltroProductosFragmentInterface {
 //        void onClickAbrirDlgSeleccionFecha();
@@ -59,6 +62,7 @@ public class FiltroProductosFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //Siempre llega mAula vacia, no se hace con esto, para recuperar el aula
         if (getArguments() != null) {
             mAula = getArguments().getParcelable("aula");
         } else {
@@ -68,17 +72,17 @@ public class FiltroProductosFragment extends Fragment {
         //Inits
         ProductosViewModel productosVM = new ViewModelProvider(requireActivity()).get(ProductosViewModel.class);
         AulasViewModel aulasVM = new ViewModelProvider(requireActivity()).get(AulasViewModel.class);
-        aulasAdapter = new ArrayAdapter<>(requireActivity(), android.R.layout.simple_list_item_1);
-        aulasAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mAdaptadorAulas = new ArrayAdapter<>(requireActivity(), android.R.layout.simple_list_item_1);
+        mAdaptadorAulas.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         //Recuperar aulas al spinner
         aulasVM.getAulas().observe(this, new Observer<List<Aula>>() {
             @Override
             public void onChanged(List<Aula> aulas) {
-                aulasAdapter.clear();
-                aulasAdapter.add(new Aula()); //id = 0
-                aulasAdapter.addAll(aulas);
-                binding.spAulas.setAdapter(aulasAdapter);
+                mAdaptadorAulas.clear();
+                mAdaptadorAulas.add(new Aula()); //id = 0
+                mAdaptadorAulas.addAll(aulas);
+                binding.spAulas.setAdapter(mAdaptadorAulas);
                 binding.spAulas.setSelection(0, false);
                 if (mAula != null) {
                     for (int i = 0; i < aulas.size(); i++) {
@@ -89,8 +93,42 @@ public class FiltroProductosFragment extends Fragment {
                         }
                     }
                 }
+
+
+
             }
         });
+
+        // Inits
+        mAdaptadorDtpos = new ArrayAdapter<>(requireActivity(),
+                android.R.layout.simple_spinner_dropdown_item,
+                new ArrayList<>());
+
+        // Inits Dptos Observer
+        DptosViewModel dptosVM = new ViewModelProvider(requireActivity()).get(DptosViewModel.class);
+        dptosVM.getDptosSE().observe(this, new Observer<List<Departamento>>() {
+            @Override
+            public void onChanged(List<Departamento> dptos) {
+                mAdaptadorDtpos.clear();
+                Departamento login = productosVM.getLogin();
+                if (login.getId().equals("0")) {
+                    binding.spDptos.setEnabled(true);
+                } else {
+                    binding.spDptos.setEnabled(false);
+                }
+                mAdaptadorDtpos.addAll(dptos);
+                mAdaptadorDtpos.notifyDataSetChanged();
+
+
+                for (int i = 0; i < dptos.size(); i++) {
+                    if (dptos.get(i).getId().equals(login.getId())) {
+                        binding.spDptos.setSelection(i);
+                    }
+                }
+
+            }
+        });
+
 
         //Recordar fecha
         productosVM.getFechaDlg().observe(this, new Observer<String>() {
@@ -101,44 +139,41 @@ public class FiltroProductosFragment extends Fragment {
         });
 
         //Recordar aula
-//
-        productosVM.getAulaSeleccionadaFiltro().observe(this, new Observer<Aula>() {
-            @Override
-            public void onChanged(Aula aula) {
-                String aulaId = aula.getId();
-                List<Aula> aulas = devolverTodasLasAulas(binding.spAulas);
-                int posicion = devolverPosicionAulaConMismoId(aulas, aulaId);
-
-                binding.spAulas.setSelection(posicion);
-            }
-        });
-
-
-
-
-//        productosVM.getProductosByFiltro().observe(this, new Observer<List<Producto>>() {
+//        productosVM.getAulaSeleccionadaFiltro().observe(this, new Observer<Aula>() {
 //            @Override
-//            public void onChanged(List<Producto> productos) {
-//                //Cojo el id de uno de los productos, busco el aulas con ese mismo id y la pongo
+//            public void onChanged(Aula aula) {
+//                String aulaId = aula.getId();
 //                List<Aula> aulas = devolverTodasLasAulas(binding.spAulas);
-//                if (aulas.size() == 0 || productos.size() == 0) {
-//                    return;
-//                }
-//                String aulaId = productos.get(0).getIdAula();
 //                int posicion = devolverPosicionAulaConMismoId(aulas, aulaId);
 //
 //                binding.spAulas.setSelection(posicion);
 //            }
 //        });
+        //Recordar aula
+        productosVM.getAulaSeleccionadaFiltro().observe(this, new Observer<Aula>() {
+            @Override
+            public void onChanged(Aula aula) {
+                String aulaId = aula.getId();
+                //TODO el problema es que este metodo devolverTodasLasAulas no me devuelve nada
+                List<Aula> aulas = devolverTodasLasAulas(binding.spAulas);
+                for (int i = 0; i < aulas.size(); i++) {
+                    if (aulas.get(i).equals(aulaId)) {
+                        binding.spAulas.setSelection(i);
+                    }
+                }
+            }
+        });
+
     }
 
     private List<Aula> devolverTodasLasAulas(Spinner spAulas) {
 //        Adapter adapter = spAulas.getAdapter();
-        Adapter adapter = aulasAdapter;
+        Adapter adapter = mAdaptadorAulas;
         if (adapter == null) { //Esto es para cuando no hay ningún producto en un aula
             //TODO: En el observer de getAulaSeleccionadaFiltro() le lllega bien la alta pero al llegar aqui el adapter es null
             return new ArrayList<>();
         }
+        //TODO adapter.getCount es 0
         int cantidadAulas = adapter.getCount();
         List<Aula> aulas = new ArrayList<>(cantidadAulas);
         for (int i = 0; i < cantidadAulas; i++) {
@@ -171,6 +206,10 @@ public class FiltroProductosFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         binding.btFiltroAceptar.setEnabled(true);
         binding.btFiltroCancelar.setEnabled(true);
+
+        //INits
+        binding.spDptos.setAdapter(mAdaptadorDtpos);
+        binding.spAulas.setAdapter(mAdaptadorAulas);
 
         //Hint in fec
         String today = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Calendar.getInstance().getTime());
@@ -249,7 +288,7 @@ public class FiltroProductosFragment extends Fragment {
             } else {
                 sp.getSelectedItem().toString();
 //                Snackbar.make(binding.getRoot(), sp.getSelectedItem().toString(), BaseTransientBottomBar.LENGTH_SHORT).show();
-                Aula aula = (Aula)sp.getSelectedItem();
+                Aula aula = (Aula) sp.getSelectedItem();
                 ProductosViewModel productosVM = new ViewModelProvider(requireActivity()).get(ProductosViewModel.class);
                 productosVM.setAulaSeleccionadaFiltro(aula);
             }
@@ -257,7 +296,7 @@ public class FiltroProductosFragment extends Fragment {
 
         @Override
         public void onNothingSelected(AdapterView<?> adapterView) {
-;
+            ;
         }
     };
 }
