@@ -36,6 +36,7 @@ public class FiltroProductosFragment extends Fragment {
     private FiltroProductosFragmentInterface mCallback;
 
     private Aula mAula;
+    ArrayAdapter<Aula> aulasAdapter;
 
     public interface FiltroProductosFragmentInterface {
 //        void onClickAbrirDlgSeleccionFecha();
@@ -65,8 +66,9 @@ public class FiltroProductosFragment extends Fragment {
         }
 
         //Inits
+        ProductosViewModel productosVM = new ViewModelProvider(requireActivity()).get(ProductosViewModel.class);
         AulasViewModel aulasVM = new ViewModelProvider(requireActivity()).get(AulasViewModel.class);
-        ArrayAdapter<Aula> aulasAdapter = new ArrayAdapter<>(requireActivity(), android.R.layout.simple_list_item_1);
+        aulasAdapter = new ArrayAdapter<>(requireActivity(), android.R.layout.simple_list_item_1);
         aulasAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         //Recuperar aulas al spinner
@@ -82,6 +84,7 @@ public class FiltroProductosFragment extends Fragment {
                     for (int i = 0; i < aulas.size(); i++) {
                         if (aulas.get(i).getId().equals(mAula.getId())) {
                             binding.spAulas.setSelection(i);
+                            productosVM.setAulaSeleccionadaFiltro(aulas.get(i));
                             break;
                         }
                     }
@@ -90,7 +93,6 @@ public class FiltroProductosFragment extends Fragment {
         });
 
         //Recordar fecha
-        ProductosViewModel productosVM = new ViewModelProvider(requireActivity()).get(ProductosViewModel.class);
         productosVM.getFechaDlg().observe(this, new Observer<String>() {
             @Override
             public void onChanged(String s) {
@@ -131,8 +133,10 @@ public class FiltroProductosFragment extends Fragment {
     }
 
     private List<Aula> devolverTodasLasAulas(Spinner spAulas) {
-        Adapter adapter = spAulas.getAdapter();
+//        Adapter adapter = spAulas.getAdapter();
+        Adapter adapter = aulasAdapter;
         if (adapter == null) { //Esto es para cuando no hay ningún producto en un aula
+            //TODO: En el observer de getAulaSeleccionadaFiltro() le lllega bien la alta pero al llegar aqui el adapter es null
             return new ArrayList<>();
         }
         int cantidadAulas = adapter.getCount();
