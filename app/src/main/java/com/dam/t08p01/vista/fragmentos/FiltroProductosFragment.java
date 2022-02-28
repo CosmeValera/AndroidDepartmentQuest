@@ -88,13 +88,13 @@ public class FiltroProductosFragment extends Fragment {
                     for (int i = 0; i < aulas.size(); i++) {
                         if (aulas.get(i).getId().equals(mAula.getId())) {
                             binding.spAulas.setSelection(i);
+                            //TODO yo creo que lo que pasa es que se otro hilo el que ejecuta el
+                            // obesrver y por tanto no sabe las aulas  tiene
                             productosVM.setAulaSeleccionadaFiltro(aulas.get(i));
                             break;
                         }
                     }
                 }
-
-
 
             }
         });
@@ -167,7 +167,7 @@ public class FiltroProductosFragment extends Fragment {
     }
 
     private List<Aula> devolverTodasLasAulas(Spinner spAulas) {
-//        Adapter adapter = spAulas.getAdapter();
+        Adapter adapter1 = spAulas.getAdapter();
         Adapter adapter = mAdaptadorAulas;
         if (adapter == null) { //Esto es para cuando no hay ningún producto en un aula
             //TODO: En el observer de getAulaSeleccionadaFiltro() le lllega bien la alta pero al llegar aqui el adapter es null
