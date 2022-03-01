@@ -168,6 +168,7 @@ public class ProductosRepository {
 
     public LiveData<Boolean> altaProducto(@NonNull Producto producto) {
         MutableLiveData<Boolean> result = new MutableLiveData<>();
+        //TODO: No hyay que cambiar l clase registro. Si no aqui; En el document va la clave primaria que es el iddpto - idaula - id
         mAppDB.getRefFS().collection("productos").document(producto.getId()).set(producto)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
