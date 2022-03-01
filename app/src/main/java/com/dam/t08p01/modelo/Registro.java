@@ -28,17 +28,12 @@ public class Registro {
     // porque solo funcionan para almacenamiento interno!!
     // ya que solo piden el nombre del fichero sin ruta y esto falla para almacenamiento externo!!
 
-    //TODO: preguntar Qe hay que usar para que el registro funciones?
-    public static void recuperarRegistro(Context context, @NonNull List<String> registro) throws Exception {
 
+    public static void recuperarRegistro(Context context, @NonNull List<String> registro) throws Exception {
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
         String ficheroRegistro = pref.getString(context.getResources().getString(R.string.ficheroRegistro_key), "");
 
-        //ficheroRegistro = context.getFilesDir() + "/" + ficheroRegistro;
-
-        //FileInputStream fis = context.openFileInput(ficheroRegistro);//new FileInputStream(ficheroRegistro);
-
-        try (FileInputStream fis = new FileInputStream(ficheroRegistro);
+        try (FileInputStream fis = context.openFileInput(ficheroRegistro);
              DataInputStream dis = new DataInputStream(fis)) {
             while (true) {
                 String reg = "";
@@ -61,15 +56,10 @@ public class Registro {
     }
 
     public static void guardarRegistro(Context context, @NonNull Producto producto, String op, boolean result) throws Exception {
-
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
         String ficheroRegistro = pref.getString(context.getResources().getString(R.string.ficheroRegistro_key), "");
 
-        //ficheroRegistro = context.getFilesDir() + "/" + ficheroRegistro;
-
-        //FileOutputStream fos = context.openFileOutput(ficheroRegistro, Context.MODE_APPEND);//new FileOutputStream(ficheroRegistro, true);
-
-        try (FileOutputStream fos = new FileOutputStream(ficheroRegistro, true);
+        try (FileOutputStream fos = context.openFileOutput(ficheroRegistro, Context.MODE_APPEND);
              DataOutputStream dos = new DataOutputStream(fos);) {
             dos.writeUTF(String.valueOf(Calendar.getInstance().getTime()));
             dos.writeInt(producto.getIdDpto());
@@ -79,23 +69,12 @@ public class Registro {
         } catch (IOException e) {
             throw new Exception(context.getResources().getString(R.string.msg_ErrorGuardarRegistro));
         }
-
     }
 
     public static void borrarRegistro(Context context) throws Exception {
-
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
         String ficheroRegistro = pref.getString(context.getResources().getString(R.string.ficheroRegistro_key), "");
 
-        ficheroRegistro = context.getFilesDir() + "/" + ficheroRegistro;
-
-        try {
-            File f = new File(ficheroRegistro);
-            if (!f.delete())
-                throw new Exception();
-        } catch (Exception e) {
-            throw new Exception(context.getResources().getString(R.string.msg_ErrorRegistro), e);
-        }
+        context.deleteFile(ficheroRegistro);
     }
-
 }
