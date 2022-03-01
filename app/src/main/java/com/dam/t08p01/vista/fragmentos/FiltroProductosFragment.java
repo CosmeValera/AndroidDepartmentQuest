@@ -81,7 +81,8 @@ public class FiltroProductosFragment extends Fragment {
             public void onChanged(List<Aula> aulas) {
                 mAdaptadorAulas.clear();
                 mAdaptadorAulas.add(new Aula()); //id = 0
-                mAdaptadorAulas.addAll(aulas);
+                List<Aula> aulasDeEseDpto = devolverAulasConEseDepartamento(aulas, productosVM.getLogin().getId());
+                mAdaptadorAulas.addAll(aulasDeEseDpto);
                 binding.spAulas.setAdapter(mAdaptadorAulas);
                 binding.spAulas.setSelection(0, false);
                 if (mAula != null) {
@@ -191,6 +192,21 @@ public class FiltroProductosFragment extends Fragment {
             }
         }
         return 0;
+    }
+
+    private List<Aula> devolverAulasConEseDepartamento(List<Aula> aulas, String idDpto) {
+        //Si el aula es admin devolvemos todas las aulas para que pueda elegir cualquiera
+        if (idDpto.equals("0")) {
+            return aulas;
+        }
+
+        List<Aula> aulasDeEseDpto = new ArrayList<>();
+        for (Aula aula : aulas) {
+            if (aula.getIdDpto().equals(idDpto)) {
+                aulasDeEseDpto.add(aula);
+            }
+        }
+        return aulasDeEseDpto;
     }
 
     @Nullable

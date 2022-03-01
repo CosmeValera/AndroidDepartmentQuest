@@ -74,6 +74,7 @@ public class MtoProductosFragment extends Fragment {
 
 
         //Inits
+        ProductosViewModel productosVM = new ViewModelProvider(requireActivity()).get(ProductosViewModel.class);
         AulasViewModel aulasVM = new ViewModelProvider(requireActivity()).get(AulasViewModel.class);
         ArrayAdapter<Aula> aulasAdapter = new ArrayAdapter<>(requireActivity(), android.R.layout.simple_list_item_1);
         aulasAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -86,7 +87,8 @@ public class MtoProductosFragment extends Fragment {
             @Override
             public void onChanged(List<Aula> aulas) {
                 aulasAdapter.clear();
-                aulasAdapter.addAll(aulas);
+                List<Aula> aulasDeEseDpto = devolverAulasConEseDepartamento(aulas, productosVM.getLogin().getId());
+                aulasAdapter.addAll(aulasDeEseDpto);
                 binding.spAulas.setAdapter(aulasAdapter);
                 binding.spAulas.setSelection(0, false);
 
@@ -102,7 +104,6 @@ public class MtoProductosFragment extends Fragment {
             }
         });
 
-        ProductosViewModel productosVM = new ViewModelProvider(requireActivity()).get(ProductosViewModel.class);
         //Recordar aulas
         productosVM.getAulaSeleccionadaMto().observe(this, new Observer<Aula>() {
             @Override
@@ -138,6 +139,21 @@ public class MtoProductosFragment extends Fragment {
             }
         }
         return 0;
+    }
+
+    private List<Aula> devolverAulasConEseDepartamento(List<Aula> aulas, String idDpto) {
+        //Si el aula es admin devolvemos todas las aulas para que pueda elegir cualquiera
+        if (idDpto.equals("0")) {
+            return aulas;
+        }
+
+        List<Aula> aulasDeEseDpto = new ArrayList<>();
+        for (Aula aula : aulas) {
+            if (aula.getIdDpto().equals(idDpto)) {
+                aulasDeEseDpto.add(aula);
+            }
+        }
+        return aulasDeEseDpto;
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
