@@ -112,8 +112,8 @@ public class FiltroProductosFragment extends Fragment {
             @Override
             public void onChanged(List<Departamento> dptos) {
                 mAdaptadorDtpos.clear();
-                Departamento login = productosVM.getLogin();
-                if (login.getId().equals("0")) {
+                Departamento loginGeneral = productosVM.getLogin();
+                if (loginGeneral.getId().equals("0")) {
                     binding.spDptos.setEnabled(true);
                 } else {
                     binding.spDptos.setEnabled(false);
@@ -121,8 +121,9 @@ public class FiltroProductosFragment extends Fragment {
                 mAdaptadorDtpos.add(new Departamento());
                 mAdaptadorDtpos.addAll(dptos);
 
+                String idDpto = productosVM.getmProductoFiltro().getIdDpto();
                 for (int i = 0; i < dptos.size(); i++) {
-                    if (dptos.get(i).getId().equals(login.getId())) {
+                    if (dptos.get(i).getId().equals(idDpto)) {
                         binding.spDptos.setSelection(i+1); //Pq 0 es vacio
                         break;
                     }
@@ -243,15 +244,9 @@ public class FiltroProductosFragment extends Fragment {
                 //TODO arreglar que se me esta asignado admin siempre
                 Spinner sp = (Spinner) parent;
                 Departamento depElegido = (Departamento) sp.getSelectedItem();
-//                if (sp != null && sp.getSelectedItem() != null && !((Departamento)sp.getSelectedItem()).getId().equals("")) {
                 if (!((Departamento)sp.getSelectedItem()).getId().equals("")){
-//                    productosVM.setLogin(depElegido);
-                    aulasVM.setLogin(depElegido);
+                    productosVM.getmProductoFiltro().setIdDpto(depElegido.getId());
                 }
-                //TODO Hay que asignar un viewmodel de algo aqui
-//                aulasVM.
-//                productosVM.
-//                aulasVM.get
                 //Hay que poner aqui el login del departamento que acabamos de seelccionar para que en el observer de despues lo haga bien
                 aulasVM.getAulas().observe(getViewLifecycleOwner(), new Observer<List<Aula>>() {
                     @Override
@@ -342,17 +337,17 @@ public class FiltroProductosFragment extends Fragment {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
             Spinner sp = (Spinner) parent;
-            if (sp.getSelectedItem().toString().equalsIgnoreCase("")) {
-                //Aula vacia, guardamos ese aula en el VM para que luego recuerde que pusimos el aula vacia
-                ProductosViewModel productosVM = new ViewModelProvider(requireActivity()).get(ProductosViewModel.class);
-                productosVM.setAulaSeleccionadaFiltro(new Aula());
-            } else {
-                sp.getSelectedItem().toString();
+//            if (sp.getSelectedItem().toString().equalsIgnoreCase("")) {
+//                //Aula vacia, guardamos ese aula en el VM para que luego recuerde que pusimos el aula vacia
+//                ProductosViewModel productosVM = new ViewModelProvider(requireActivity()).get(ProductosViewModel.class);
+//                productosVM.setAulaSeleccionadaFiltro(new Aula());
+//            } else {
+//                sp.getSelectedItem().toString();
 //                Snackbar.make(binding.getRoot(), sp.getSelectedItem().toString(), BaseTransientBottomBar.LENGTH_SHORT).show();
                 Aula aula = (Aula) sp.getSelectedItem();
                 ProductosViewModel productosVM = new ViewModelProvider(requireActivity()).get(ProductosViewModel.class);
                 productosVM.setAulaSeleccionadaFiltro(aula);
-            }
+//            }
         }
 
         @Override
