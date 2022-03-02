@@ -120,14 +120,15 @@ public class FiltroProductosFragment extends Fragment {
                 }
                 mAdaptadorDtpos.add(new Departamento());
                 mAdaptadorDtpos.addAll(dptos);
-                mAdaptadorDtpos.notifyDataSetChanged();
 
                 for (int i = 0; i < dptos.size(); i++) {
                     if (dptos.get(i).getId().equals(login.getId())) {
-                        binding.spDptos.setSelection(i);
+                        binding.spDptos.setSelection(i+1); //Pq 0 es vacio
                         break;
                     }
                 }
+
+                mAdaptadorDtpos.notifyDataSetChanged();
             }
         });
 
@@ -155,11 +156,12 @@ public class FiltroProductosFragment extends Fragment {
             @Override
             public void onChanged(Aula aula) {
                 String aulaId = aula.getId();
-                //TODO el problema es que este metodo devolverTodasLasAulas no me devuelve nada
                 List<Aula> aulas = devolverTodasLasAulas(binding.spAulas);
+                //Aula de 0 es todas
                 for (int i = 0; i < aulas.size(); i++) {
                     if (aulas.get(i).equals(aulaId)) {
                         binding.spAulas.setSelection(i);
+                        break;
                     }
                 }
             }
@@ -171,12 +173,11 @@ public class FiltroProductosFragment extends Fragment {
         Adapter adapter1 = spAulas.getAdapter();
         Adapter adapter = mAdaptadorAulas;
         if (adapter == null) { //Esto es para cuando no hay ningún producto en un aula
-            //TODO: En el observer de getAulaSeleccionadaFiltro() le lllega bien la alta pero al llegar aqui el adapter es null
             return new ArrayList<>();
         }
-        //TODO adapter.getCount es 0
         int cantidadAulas = adapter.getCount();
         List<Aula> aulas = new ArrayList<>(cantidadAulas);
+//        aulas.add(new Aula());
         for (int i = 0; i < cantidadAulas; i++) {
             Aula aula = (Aula) adapter.getItem(i);
             aulas.add(aula);
@@ -241,16 +242,18 @@ public class FiltroProductosFragment extends Fragment {
             public void onItemSelected(AdapterView<?> parent, View view, int i, long l) {
                 //TODO arreglar que se me esta asignado admin siempre
                 Spinner sp = (Spinner) parent;
+                Departamento depElegido = (Departamento) sp.getSelectedItem();
 //                if (sp != null && sp.getSelectedItem() != null && !((Departamento)sp.getSelectedItem()).getId().equals("")) {
-                    Departamento depElegido = (Departamento) sp.getSelectedItem();
-                    productosVM.setLogin(depElegido);
-//                }
+                if (!((Departamento)sp.getSelectedItem()).getId().equals("")){
+//                    productosVM.setLogin(depElegido);
+                    aulasVM.setLogin(depElegido);
+                }
                 //TODO Hay que asignar un viewmodel de algo aqui
 //                aulasVM.
 //                productosVM.
 //                aulasVM.get
                 //Hay que poner aqui el login del departamento que acabamos de seelccionar para que en el observer de despues lo haga bien
-                aulasVM.getAulas().observe(requireActivity()/*TODO: no se si requireActiivy es correcto*/, new Observer<List<Aula>>() {
+                aulasVM.getAulas().observe(getViewLifecycleOwner(), new Observer<List<Aula>>() {
                     @Override
                     public void onChanged(List<Aula> aulas) {
                         mAdaptadorAulas.clear();
