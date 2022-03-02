@@ -168,7 +168,7 @@ public class ProductosRepository {
     public LiveData<Boolean> altaProducto(@NonNull Producto producto) {
         MutableLiveData<Boolean> result = new MutableLiveData<>();
         //TODO: No hyay que cambiar l clase registro. Si no aqui; En el document va la clave primaria que es el iddpto - idaula - id
-        mAppDB.getRefFS().collection("productos").document(producto.getId()).set(producto)
+        mAppDB.getRefFS().collection("productos").document(producto.getIdDpto() + "-" + producto.getIdAula() + "-" + producto.getId()).set(producto)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
@@ -193,7 +193,7 @@ public class ProductosRepository {
 
     public LiveData<Boolean> editarProducto(@NonNull Producto producto) {
         MutableLiveData<Boolean> result = new MutableLiveData<>();
-        mAppDB.getRefFS().collection("productos").document(producto.getId()).set(producto, SetOptions.merge())
+        mAppDB.getRefFS().collection("productos").document(producto.getIdDpto() + "-" + producto.getIdAula() + "-" + producto.getId()).set(producto, SetOptions.merge())
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
@@ -218,7 +218,7 @@ public class ProductosRepository {
 
     public LiveData<Boolean> bajaProducto(@NonNull Producto producto) {
         MutableLiveData<Boolean> result = new MutableLiveData<>();
-        mAppDB.getRefFS().collection("productos").document(producto.getId()).delete()
+        mAppDB.getRefFS().collection("productos").document(producto.getIdDpto() + "-" + producto.getIdAula() + "-" + producto.getId()).delete()
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
