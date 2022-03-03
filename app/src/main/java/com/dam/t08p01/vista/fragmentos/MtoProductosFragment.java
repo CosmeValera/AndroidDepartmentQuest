@@ -94,8 +94,8 @@ public class MtoProductosFragment extends Fragment {
 
                 //en caso de edicion seleccionar por defecto el aula que había
                 if (mProducto != null) { //Editar
-                    for (int i = 0; i < aulas.size(); i++) {
-                        if (aulas.get(i).getId().equals(mProducto.getIdAula ())) {
+                    for (int i = 0; i < aulasDeEseDpto.size(); i++) {
+                        if (aulasDeEseDpto.get(i).getId().equals(mProducto.getIdAula ())) {
                             binding.spAulas.setSelection(i);
                             break;
                         }

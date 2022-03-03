@@ -241,7 +241,6 @@ public class FiltroProductosFragment extends Fragment {
         binding.spDptos.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int i, long l) {
-                //TODO arreglar que se me esta asignado admin siempre
                 Spinner sp = (Spinner) parent;
                 Departamento depElegido = (Departamento) sp.getSelectedItem();
                 if (!((Departamento)sp.getSelectedItem()).getId().equals("")){
