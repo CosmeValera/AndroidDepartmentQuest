@@ -71,19 +71,13 @@ public class MtoProductosFragment extends Fragment {
             mProducto = null;
         }
 
-//        NavHostFragment navHost = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment_content_main);
-
-
         //Inits
         ProductosViewModel productosVM = new ViewModelProvider(requireActivity()).get(ProductosViewModel.class);
         AulasViewModel aulasVM = new ViewModelProvider(requireActivity()).get(AulasViewModel.class);
         ArrayAdapter<Aula> aulasAdapter = new ArrayAdapter<>(requireActivity(), android.R.layout.simple_list_item_1);
         aulasAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-        //Recuperar aulas de Firebase
-
-
-        //Aulas observer
+        //Aulas observer (Recuperar aulas de Firebase)
         aulasVM.getAulas().observe(this, new Observer<List<Aula>>() {
             @Override
             public void onChanged(List<Aula> aulas) {
@@ -91,12 +85,11 @@ public class MtoProductosFragment extends Fragment {
                 List<Aula> aulasDeEseDpto = devolverAulasConEseDepartamento(aulas, productosVM.getLogin().getId());
                 aulasAdapter.addAll(aulasDeEseDpto);
                 binding.spAulas.setAdapter(aulasAdapter);
-                binding.spAulas.setSelection(0, false);
 
-                //en caso de edicion seleccionar por defecto el aula que había
-                if (mProducto != null) { //Editar
+                //en caso de edicion seleccionar por defecto el aula que había, y tmb para recordar el aula
+                if (mProducto != null) { //Editar, y recordar aula
                     for (int i = 0; i < aulasDeEseDpto.size(); i++) {
-                        if (aulasDeEseDpto.get(i).getId().equals(mProducto.getIdAula ())) {
+                        if (aulasDeEseDpto.get(i).getId().equals(mProducto.getIdAula())) {
                             binding.spAulas.setSelection(i);
                             break;
                         }
@@ -113,12 +106,16 @@ public class MtoProductosFragment extends Fragment {
                 List<Aula> aulas = devolverTodasLasAulas(binding.spAulas);
                 int posicion = devolverPosicionAulaConMismoId(aulas, aulaId);
 
-                binding.spAulas.setSelection(posicion);
+                //Esto es para que pueda funcionar que recuerde el aula
+                mProducto = new Producto();
+                mProducto.setIdAula(aulaId);
+
+                if (posicion != 0)
+                    binding.spAulas.setSelection(posicion);
             }
         });
     }
 
-    //Yo creo que va a saer pq esta recorreidno todas las ulas y no solo las de ese dep
     private List<Aula> devolverTodasLasAulas(Spinner spAulas) {
         Adapter adapter = spAulas.getAdapter();
         if (adapter == null) { //Esto es para cuando no hay ningún producto en un aula
@@ -167,56 +164,49 @@ public class MtoProductosFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        binding.btProductoCancelar.setEnabled(true);
+        binding.btProductoAceptar.setEnabled(true);
 
-        // Inits
-        if (mOp != -1) {    // MtoProductosFragment requiere una operación válida!!
-            binding.btProductoCancelar.setEnabled(true);
-            binding.btProductoAceptar.setEnabled(true);
+        ProductosViewModel productosVM = new ViewModelProvider
+                (requireActivity()).get(ProductosViewModel.class);
+        Departamento login = productosVM.getLogin();
 
-            ProductosViewModel productosVM = new ViewModelProvider
-                    (requireActivity()).get(ProductosViewModel.class);
-            Departamento login = productosVM.getLogin();
+        switch (mOp) {
+            case OP_CREAR:
+                binding.tvProductoCabecera.setText(getString(R.string.tv_Producto_Cabecera_Crear));
+                binding.etProductoIdDpto.setText(String.valueOf(login.getId()));
+                binding.etProductoIdDpto.setEnabled(false);
+                binding.etProductoIdDptoNombre.setText(login.getNombre());
+                binding.etProductoIdDptoNombre.setEnabled(false);
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddhhmmss", Locale.getDefault());
+                binding.etProductoId.setText(sdf.format(Calendar.getInstance().getTime()));
+                binding.etProductoId.setEnabled(false);
+                break;
+            case OP_EDITAR:
+                binding.tvProductoCabecera.setText(getString(R.string.tv_Producto_Cabecera_Editar));
+                binding.etProductoIdDpto.setText(String.valueOf(mProducto.getIdDpto()));
+                binding.etProductoIdDpto.setEnabled(false);
+                binding.etProductoIdDptoNombre.setText(login.getNombre());
+                binding.etProductoIdDptoNombre.setEnabled(false);
+                binding.etProductoId.setText(mProducto.getId());
+                binding.etProductoId.setEnabled(false);
+                binding.etProductoNombre.setText(mProducto.getNombre());
 
-            switch (mOp) {
-                case OP_CREAR:
-                    binding.tvProductoCabecera.setText(getString(R.string.tv_Producto_Cabecera_Crear));
-                    binding.etProductoIdDpto.setText(String.valueOf(login.getId()));
-                    binding.etProductoIdDpto.setEnabled(false);
-                    binding.etProductoIdDptoNombre.setText(login.getNombre());
-                    binding.etProductoIdDptoNombre.setEnabled(false);
-                    SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddhhmmss", Locale.getDefault());
-                    binding.etProductoId.setText(sdf.format(Calendar.getInstance().getTime()));
-                    binding.etProductoId.setEnabled(false);
-                    break;
-                case OP_EDITAR:
-                    binding.tvProductoCabecera.setText(getString(R.string.tv_Producto_Cabecera_Editar));
-                    binding.etProductoIdDpto.setText(String.valueOf(mProducto.getIdDpto()));
-                    binding.etProductoIdDpto.setEnabled(false);
-                    binding.etProductoIdDptoNombre.setText(login.getNombre());
-                    binding.etProductoIdDptoNombre.setEnabled(false);
-                    binding.etProductoId.setText(mProducto.getId());
-                    binding.etProductoId.setEnabled(false);
-                    binding.etProductoNombre.setText(mProducto.getNombre());
-
-                    binding.etProductoIdDpto.setText(String.valueOf(mProducto.getIdDpto()));
-                    binding.etProductoId.setText(mProducto.getId());
-                    binding.etFecAlta.setText(String.valueOf(mProducto.getFecAltaF()));
-                    binding.etProductoNombre.setText(String.valueOf(mProducto.getNombre()));
-                    binding.etProductoCantidad.setText(String.valueOf(mProducto.getCantidad()));
-                    break;
-            }
-            //Hint in fec
-            String today = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Calendar.getInstance().getTime());
-            binding.etFecAlta.setHint(today);
-
-            // Listeners
-            binding.btProductoCancelar.setOnClickListener(btProductoCancelar_OnClickListener);
-            binding.btProductoAceptar.setOnClickListener(btProductoAceptar_OnClickListener);
-            binding.spAulas.setOnItemSelectedListener(spAulas_onItemSelectedListener);
-        } else {
-            binding.btProductoCancelar.setEnabled(false);
-            binding.btProductoAceptar.setEnabled(false);
+                binding.etProductoIdDpto.setText(String.valueOf(mProducto.getIdDpto()));
+                binding.etProductoId.setText(mProducto.getId());
+                binding.etFecAlta.setText(String.valueOf(mProducto.getFecAltaF()));
+                binding.etProductoNombre.setText(String.valueOf(mProducto.getNombre()));
+                binding.etProductoCantidad.setText(String.valueOf(mProducto.getCantidad()));
+                break;
         }
+        //Hint in fec
+        String today = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Calendar.getInstance().getTime());
+        binding.etFecAlta.setHint(today);
+
+        // Listeners
+        binding.btProductoCancelar.setOnClickListener(btProductoCancelar_OnClickListener);
+        binding.btProductoAceptar.setOnClickListener(btProductoAceptar_OnClickListener);
+        binding.spAulas.setOnItemSelectedListener(spAulas_onItemSelectedListener);
     }
 
     @Override
@@ -240,14 +230,14 @@ public class MtoProductosFragment extends Fragment {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
             Spinner sp = (Spinner) parent;
+
             if (sp.getSelectedItem().toString().equalsIgnoreCase("")) {
                 //Aula vacia, guardamos ese aula en el VM para que luego recuerde que pusimos el aula vacia
                 ProductosViewModel productosVM = new ViewModelProvider(requireActivity()).get(ProductosViewModel.class);
                 productosVM.setAulaSeleccionadaMto(new Aula());
             } else {
-                sp.getSelectedItem().toString();
-//                Snackbar.make(binding.getRoot(), sp.getSelectedItem().toString(), BaseTransientBottomBar.LENGTH_SHORT).show();
-                Aula aula = (Aula)sp.getSelectedItem();
+                //TODO lo que esta pasando es que se pulsa por defecto el aula de la posicion 0
+                Aula aula = (Aula) sp.getSelectedItem();
                 ProductosViewModel productosVM = new ViewModelProvider(requireActivity()).get(ProductosViewModel.class);
                 productosVM.setAulaSeleccionadaMto(aula);
             }
