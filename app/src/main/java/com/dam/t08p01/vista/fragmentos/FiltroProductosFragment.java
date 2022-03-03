@@ -21,7 +21,6 @@ import androidx.lifecycle.ViewModelProvider;
 import com.dam.t08p01.databinding.FragmentFiltroProductoBinding;
 import com.dam.t08p01.modelo.Aula;
 import com.dam.t08p01.modelo.Departamento;
-import com.dam.t08p01.modelo.Producto;
 import com.dam.t08p01.vista.dialogos.DlgSeleccionFecha;
 import com.dam.t08p01.vistamodelo.AulasViewModel;
 import com.dam.t08p01.vistamodelo.DptosViewModel;
@@ -40,7 +39,7 @@ public class FiltroProductosFragment extends Fragment {
 
     private Aula mAula;
     private ArrayAdapter<Aula> mAdaptadorAulas;
-    private ArrayAdapter<Departamento> mAdaptadorDtpos;
+    private ArrayAdapter<Departamento> mAdaptadorDptos;
 
     private ProductosViewModel productosVM;
     private AulasViewModel aulasVM;
@@ -103,7 +102,7 @@ public class FiltroProductosFragment extends Fragment {
 //        });
 
         // Inits
-        mAdaptadorDtpos = new ArrayAdapter<>(requireActivity(),
+        mAdaptadorDptos = new ArrayAdapter<>(requireActivity(),
                 android.R.layout.simple_spinner_dropdown_item,
                 new ArrayList<>());
 
@@ -112,15 +111,15 @@ public class FiltroProductosFragment extends Fragment {
         dptosVM.getDptosSE().observe(this, new Observer<List<Departamento>>() {
             @Override
             public void onChanged(List<Departamento> dptos) {
-                mAdaptadorDtpos.clear();
+                mAdaptadorDptos.clear();
                 Departamento loginGeneral = productosVM.getLogin();
                 if (loginGeneral.getId().equals("0")) {
                     binding.spDptos.setEnabled(true);
                 } else {
                     binding.spDptos.setEnabled(false);
                 }
-                mAdaptadorDtpos.add(new Departamento());
-                mAdaptadorDtpos.addAll(dptos);
+                mAdaptadorDptos.add(new Departamento());
+                mAdaptadorDptos.addAll(dptos);
 
                 String idDpto = productosVM.getmProductoFiltro().getIdDpto();
                 for (int i = 0; i < dptos.size(); i++) {
@@ -129,7 +128,7 @@ public class FiltroProductosFragment extends Fragment {
                         break;
                     }
                 }
-                mAdaptadorDtpos.notifyDataSetChanged();
+                mAdaptadorDptos.notifyDataSetChanged();
             }
         });
 
@@ -157,7 +156,8 @@ public class FiltroProductosFragment extends Fragment {
             @Override
             public void onChanged(Aula aula) {
                 String aulaId = aula.getId();
-                List<Aula> aulas = devolverTodasLasAulas(binding.spAulas);
+                List<Aula> aulas = devovolverAula(binding.spAulas);
+                List<Aula> aulasDeEseDep = devolverAulasConEseDepartamento(aulas, productosVM.getmProductoFiltro().getIdDpto());
 
 
                 //Esto es para que pueda funcionar que recuerde el aula
@@ -165,9 +165,9 @@ public class FiltroProductosFragment extends Fragment {
                 mAula.setId(aulaId);
 
                 //Aula de 0 es todas
-                for (int i = 0; i < aulas.size(); i++) {
-                    if (aulas.get(i).equals(aulaId)) {
-                        binding.spAulas.setSelection(i);
+                for (int i = 0; i < aulasDeEseDep.size(); i++) {
+                    if (aulasDeEseDep.get(i).getId().equals(aulaId)) {
+                        binding.spAulas.setSelection(i+1);
                         break;
                     }
                 }
@@ -176,7 +176,7 @@ public class FiltroProductosFragment extends Fragment {
 
     }
 
-    private List<Aula> devolverTodasLasAulas(Spinner spAulas) {
+    private List<Aula> devovolverAula(Spinner spAulas) {
         Adapter adapter1 = spAulas.getAdapter();
         Adapter adapter = mAdaptadorAulas;
         if (adapter == null) { //Esto es para cuando no hay ningún producto en un aula
@@ -234,7 +234,7 @@ public class FiltroProductosFragment extends Fragment {
         binding.btFiltroCancelar.setEnabled(true);
 
         //INits
-        binding.spDptos.setAdapter(mAdaptadorDtpos);
+        binding.spDptos.setAdapter(mAdaptadorDptos);
         binding.spAulas.setAdapter(mAdaptadorAulas);
 
         //Hint in fec
@@ -339,7 +339,7 @@ public class FiltroProductosFragment extends Fragment {
             Spinner sp = (Spinner) parent;
             Departamento depElegido = (Departamento) sp.getSelectedItem();
 //            if (!((Departamento) sp.getSelectedItem()).getId().equals("")) {
-                productosVM.getmProductoFiltro().setIdDpto(depElegido.getId());
+            productosVM.getmProductoFiltro().setIdDpto(depElegido.getId());
 //            }
             //Hay que poner aqui el login del departamento que acabamos de seelccionar para que en el observer de despues lo haga bien
             aulasVM.getAulas().observe(getViewLifecycleOwner(), new Observer<List<Aula>>() {
@@ -360,6 +360,9 @@ public class FiltroProductosFragment extends Fragment {
                             }
                         }
                     }
+//                    else {
+//                        productosVM.setAulaSeleccionadaFiltro(new Aula());
+//                    }
                 }
             });
         }
