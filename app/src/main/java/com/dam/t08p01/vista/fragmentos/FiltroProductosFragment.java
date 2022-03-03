@@ -124,7 +124,7 @@ public class FiltroProductosFragment extends Fragment {
                 String idDpto = productosVM.getmProductoFiltro().getIdDpto();
                 for (int i = 0; i < dptos.size(); i++) {
                     if (dptos.get(i).getId().equals(idDpto)) {
-                        binding.spDptos.setSelection(i+1); //Pq 0 es vacio
+                        binding.spDptos.setSelection(i + 1); //Pq 0 es vacio
                         break;
                     }
                 }
@@ -197,8 +197,10 @@ public class FiltroProductosFragment extends Fragment {
     }
 
     private List<Aula> devolverAulasConEseDepartamento(List<Aula> aulas, String idDpto) {
-        //Si el aula es admin devolvemos todas las aulas para que pueda elegir cualquiera
-        if (idDpto.equals("0")) {
+        //Si el aula es "" devolvemos todas las aulas para que pueda elegir cualquiera
+        if (idDpto.equals("")
+//        || idDpto.equals("0") //Si descomentas esta linea admin tambien tiene todas las aulas disponibles
+        ) {
             return aulas;
         }
 
@@ -238,42 +240,7 @@ public class FiltroProductosFragment extends Fragment {
         binding.btFecAlta.setOnClickListener(btFecAlta_onClickListener);
         binding.spAulas.setOnItemSelectedListener(spAulas_onItemSelectedListener);
 
-        binding.spDptos.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int i, long l) {
-                Spinner sp = (Spinner) parent;
-                Departamento depElegido = (Departamento) sp.getSelectedItem();
-                if (!((Departamento)sp.getSelectedItem()).getId().equals("")){
-                    productosVM.getmProductoFiltro().setIdDpto(depElegido.getId());
-                }
-                //Hay que poner aqui el login del departamento que acabamos de seelccionar para que en el observer de despues lo haga bien
-                aulasVM.getAulas().observe(getViewLifecycleOwner(), new Observer<List<Aula>>() {
-                    @Override
-                    public void onChanged(List<Aula> aulas) {
-                        mAdaptadorAulas.clear();
-                        mAdaptadorAulas.add(new Aula()); //id = 0
-                        List<Aula> aulasDeEseDpto = devolverAulasConEseDepartamento(aulas, productosVM.getLogin().getId());
-                        mAdaptadorAulas.addAll(aulasDeEseDpto);
-                        binding.spAulas.setAdapter(mAdaptadorAulas);
-                        binding.spAulas.setSelection(0, false);
-                        if (mAula != null) {
-                            for (int i = 0; i < aulas.size(); i++) {
-                                if (aulas.get(i).getId().equals(mAula.getId())) {
-                                    binding.spAulas.setSelection(i);
-                                    productosVM.setAulaSeleccionadaFiltro(aulas.get(i));
-                                    break;
-                                }
-                            }
-                        }
-                    }
-                });
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-                ;
-            }
-        });
+        binding.spDptos.setOnItemSelectedListener(spDptos_onItemSelectedListener);
 
     }
 
@@ -318,9 +285,10 @@ public class FiltroProductosFragment extends Fragment {
                 String idAula = (binding.spAulas.getSelectedItem() != null) ?
                         ((Aula) binding.spAulas.getSelectedItem()).getId()
                         : "%";
-                String idDpto = productosVM.getLogin().getId().equals("0")?
-                        ""
-                        : ((Departamento)binding.spDptos.getSelectedItem()).getId();
+                String idDpto = //Si descomentas las dos siguientes lineas, admin ve todas las aulas
+//                        productosVM.getLogin().getId().equals("0") ?
+//                        "" :
+                        ((Departamento) binding.spDptos.getSelectedItem()).getId();
                 mCallback.onAceptarFiltroProductosFrag(fecha, idAula, idDpto);
             }
         }
@@ -346,9 +314,9 @@ public class FiltroProductosFragment extends Fragment {
 //            } else {
 //                sp.getSelectedItem().toString();
 //                Snackbar.make(binding.getRoot(), sp.getSelectedItem().toString(), BaseTransientBottomBar.LENGTH_SHORT).show();
-                Aula aula = (Aula) sp.getSelectedItem();
-                ProductosViewModel productosVM = new ViewModelProvider(requireActivity()).get(ProductosViewModel.class);
-                productosVM.setAulaSeleccionadaFiltro(aula);
+            Aula aula = (Aula) sp.getSelectedItem();
+            ProductosViewModel productosVM = new ViewModelProvider(requireActivity()).get(ProductosViewModel.class);
+            productosVM.setAulaSeleccionadaFiltro(aula);
 //            }
         }
 
@@ -357,4 +325,45 @@ public class FiltroProductosFragment extends Fragment {
             ;
         }
     };
+
+
+    private AdapterView.OnItemSelectedListener spDptos_onItemSelectedListener = new AdapterView.OnItemSelectedListener() {
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int i, long l) {
+            Spinner sp = (Spinner) parent;
+            Departamento depElegido = (Departamento) sp.getSelectedItem();
+//            if (!((Departamento) sp.getSelectedItem()).getId().equals("")) {
+                productosVM.getmProductoFiltro().setIdDpto(depElegido.getId());
+//            }
+            //Hay que poner aqui el login del departamento que acabamos de seelccionar para que en el observer de despues lo haga bien
+            aulasVM.getAulas().observe(getViewLifecycleOwner(), new Observer<List<Aula>>() {
+                @Override
+                public void onChanged(List<Aula> aulas) {
+                    mAdaptadorAulas.clear();
+                    mAdaptadorAulas.add(new Aula()); //id = 0
+                    List<Aula> aulasDeEseDpto = devolverAulasConEseDepartamento(aulas, productosVM.getmProductoFiltro().getIdDpto());
+                    mAdaptadorAulas.addAll(aulasDeEseDpto);
+                    binding.spAulas.setAdapter(mAdaptadorAulas);
+                    binding.spAulas.setSelection(0, false);
+                    if (mAula != null) {
+                        for (int i = 0; i < aulas.size(); i++) {
+                            if (aulas.get(i).getId().equals(mAula.getId())) {
+                                binding.spAulas.setSelection(i);
+                                productosVM.setAulaSeleccionadaFiltro(aulas.get(i));
+                                break;
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> adapterView) {
+            ;
+        }
+
+    };
+
+
 }

@@ -141,8 +141,10 @@ public class MtoProductosFragment extends Fragment {
     }
 
     private List<Aula> devolverAulasConEseDepartamento(List<Aula> aulas, String idDpto) {
-        //Si el aula es admin devolvemos todas las aulas para que pueda elegir cualquiera
-        if (idDpto.equals("0")) {
+        //Si el aula es "" devolvemos todas las aulas para que pueda elegir cualquiera
+        if (idDpto.equals("")
+//        || idDpto.equals("0") //Si descomentas esta linea admin tambien tiene todas las aulas disponibles
+        ) {
             return aulas;
         }
 
