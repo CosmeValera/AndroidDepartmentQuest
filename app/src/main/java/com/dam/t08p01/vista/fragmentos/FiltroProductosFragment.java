@@ -21,6 +21,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.dam.t08p01.databinding.FragmentFiltroProductoBinding;
 import com.dam.t08p01.modelo.Aula;
 import com.dam.t08p01.modelo.Departamento;
+import com.dam.t08p01.modelo.Producto;
 import com.dam.t08p01.vista.dialogos.DlgSeleccionFecha;
 import com.dam.t08p01.vistamodelo.AulasViewModel;
 import com.dam.t08p01.vistamodelo.DptosViewModel;
@@ -128,7 +129,6 @@ public class FiltroProductosFragment extends Fragment {
                         break;
                     }
                 }
-
                 mAdaptadorDtpos.notifyDataSetChanged();
             }
         });
@@ -158,6 +158,12 @@ public class FiltroProductosFragment extends Fragment {
             public void onChanged(Aula aula) {
                 String aulaId = aula.getId();
                 List<Aula> aulas = devolverTodasLasAulas(binding.spAulas);
+
+
+                //Esto es para que pueda funcionar que recuerde el aula
+                mAula = new Aula();
+                mAula.setId(aulaId);
+
                 //Aula de 0 es todas
                 for (int i = 0; i < aulas.size(); i++) {
                     if (aulas.get(i).equals(aulaId)) {
