@@ -167,6 +167,7 @@ public class FiltroProductosFragment extends Fragment {
                 //Aula de 0 es todas
                 for (int i = 0; i < aulasDeEseDep.size(); i++) {
                     if (aulasDeEseDep.get(i).getId().equals(aulaId)) {
+//                        if (aulasDeEseDep.size()<)
                         binding.spAulas.setSelection(i+1);
                         break;
                     }
@@ -352,10 +353,10 @@ public class FiltroProductosFragment extends Fragment {
                     binding.spAulas.setAdapter(mAdaptadorAulas);
                     binding.spAulas.setSelection(0, false);
                     if (mAula != null) {
-                        for (int i = 0; i < aulas.size(); i++) {
-                            if (aulas.get(i).getId().equals(mAula.getId())) {
+                        for (int i = 0; i < aulasDeEseDpto.size(); i++) {
+                            if (aulasDeEseDpto.get(i).getId().equals(mAula.getId())) {
                                 binding.spAulas.setSelection(i);
-                                productosVM.setAulaSeleccionadaFiltro(aulas.get(i));
+                                productosVM.setAulaSeleccionadaFiltro(aulasDeEseDpto.get(i));
                                 break;
                             }
                         }

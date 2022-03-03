@@ -39,7 +39,7 @@ public class Registro {
                 String reg = "";
                 reg += dis.readUTF();
                 reg += "\nDpto: ";
-                reg += dis.readInt();
+                reg += dis.readUTF();
                 reg += " Producto: ";
                 reg += dis.readUTF();
                 reg += " Op.: ";
