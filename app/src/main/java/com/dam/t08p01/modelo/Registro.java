@@ -62,7 +62,7 @@ public class Registro {
         try (FileOutputStream fos = context.openFileOutput(ficheroRegistro, Context.MODE_APPEND);
              DataOutputStream dos = new DataOutputStream(fos);) {
             dos.writeUTF(String.valueOf(Calendar.getInstance().getTime()));
-            dos.writeInt(producto.getIdDpto());
+            dos.writeUTF(producto.getIdDpto());
             dos.writeUTF(producto.getId());
             dos.writeUTF(op);
             dos.writeBoolean(result);

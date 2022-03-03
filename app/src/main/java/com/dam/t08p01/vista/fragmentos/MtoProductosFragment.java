@@ -261,7 +261,7 @@ public class MtoProductosFragment extends Fragment {
                 ) {
                     // Creamos un nuevo producto, independientemente de la operación a realizar!!
                     mProducto = new Producto();
-                    mProducto.setIdDpto(Integer.parseInt(binding.etProductoIdDpto.getText().toString()));
+                    mProducto.setIdDpto(binding.etProductoIdDpto.getText().toString());
                     mProducto.setId(binding.etProductoId.getText().toString());
                     mProducto.setFecAltaF((binding.etFecAlta.getText().toString().equals(""))
                             ? new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Calendar.getInstance().getTime())

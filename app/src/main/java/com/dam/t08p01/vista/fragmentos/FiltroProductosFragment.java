@@ -49,7 +49,7 @@ public class FiltroProductosFragment extends Fragment {
 
         void onCancelarFiltroProductosFrag();
 
-        void onAceptarFiltroProductosFrag(String fecAlta, String idAula);
+        void onAceptarFiltroProductosFrag(String fecAlta, String idAula, String idDpto);
     }
 
     @Override
@@ -316,10 +316,13 @@ public class FiltroProductosFragment extends Fragment {
                 String fecha = ((binding.etFecAlta.getText().toString().equals(""))
                         ? new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Calendar.getInstance().getTime())
                         : binding.etFecAlta.getText().toString());
-                String id = (binding.spAulas.getSelectedItem() != null) ?
+                String idAula = (binding.spAulas.getSelectedItem() != null) ?
                         ((Aula) binding.spAulas.getSelectedItem()).getId()
                         : "%";
-                mCallback.onAceptarFiltroProductosFrag(fecha, id);
+                String idDpto = productosVM.getLogin().getId().equals("0")?
+                        ""
+                        : ((Departamento)binding.spDptos.getSelectedItem()).getId();
+                mCallback.onAceptarFiltroProductosFrag(fecha, idAula, idDpto);
             }
         }
     };

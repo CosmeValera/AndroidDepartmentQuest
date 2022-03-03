@@ -236,12 +236,10 @@ public class ProductosActivity extends AppCompatActivity
     }
 
     @Override
-    public void onAceptarFiltroProductosFrag(String fecAlta, String idAula) {
+    public void onAceptarFiltroProductosFrag(String fecAlta, String idAula, String idDpto) {
         mProductosVM.getmProductoFiltro().setFecAlta(fecAlta);
         mProductosVM.getmProductoFiltro().setIdAula(idAula);
-
-        //Asignar departamento en el viewmovel de productos
-        mProductosVM.getmProductoFiltro().setIdDpto(mProductosVM.getLogin().getId());
+        mProductosVM.getmProductoFiltro().setIdDpto(idDpto);
 
         //Esto no se puede hacer asi pq el login del en mainViewModel viene null
 //        MainViewModel mMainVM = new ViewModelProvider(this).get(MainViewModel.class);

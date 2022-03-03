@@ -6,7 +6,7 @@ import android.os.Parcelable;
 import androidx.annotation.NonNull;
 
 public class Producto implements Parcelable {
-    private int idDpto; //PK, FK
+    private String idDpto; //PK, FK
     @NonNull
     private String id; //PK
     private String fecAlta; //yyyyMMdd
@@ -20,7 +20,7 @@ public class Producto implements Parcelable {
 
     //Constructores
     public Producto() {
-        idDpto = 0;
+        idDpto = "";
         id = "";
         fecAlta = "";
         nombre = "";
@@ -29,11 +29,13 @@ public class Producto implements Parcelable {
     }
 
     //getters & setters
-    public int getIdDpto() {
+
+
+    public String getIdDpto() {
         return idDpto;
     }
 
-    public void setIdDpto(int idDpto) {
+    public void setIdDpto(String idDpto) {
         this.idDpto = idDpto;
     }
 
@@ -90,7 +92,7 @@ public class Producto implements Parcelable {
     }
     //Parcelable
     protected Producto(Parcel in) {
-        idDpto = in.readInt();
+        idDpto = in.readString();
         id = in.readString();
         fecAlta = in.readString();
         nombre = in.readString();
@@ -117,7 +119,7 @@ public class Producto implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeInt(idDpto);
+        parcel.writeString(idDpto);
         parcel.writeString(id);
         parcel.writeString(fecAlta);
         parcel.writeString(nombre);
