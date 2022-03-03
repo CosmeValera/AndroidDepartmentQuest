@@ -31,18 +31,18 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 public class FiltroProductosFragment extends Fragment {
 
     private FragmentFiltroProductoBinding binding;
     private FiltroProductosFragmentInterface mCallback;
 
-    private Aula mAula;
     private ArrayAdapter<Aula> mAdaptadorAulas;
     private ArrayAdapter<Departamento> mAdaptadorDptos;
 
     private ProductosViewModel productosVM;
-    private AulasViewModel aulasVM;
+    private Departamento login;
 
     public interface FiltroProductosFragmentInterface {
 //        void onClickAbrirDlgSeleccionFecha();
@@ -65,59 +65,20 @@ public class FiltroProductosFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //Siempre llega mAula vacia, no se hace con esto, para recuperar el aula
-        if (getArguments() != null) {
-            mAula = getArguments().getParcelable("aula");
-        } else {
-            mAula = null;
-        }
 
         //Inits
         productosVM = new ViewModelProvider(requireActivity()).get(ProductosViewModel.class);
-        aulasVM = new ViewModelProvider(requireActivity()).get(AulasViewModel.class);
-        mAdaptadorAulas = new ArrayAdapter<>(requireActivity(), android.R.layout.simple_list_item_1);
-        mAdaptadorAulas.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mAdaptadorAulas = new ArrayAdapter<>(requireActivity(), android.R.layout.simple_spinner_dropdown_item);
+        mAdaptadorDptos = new ArrayAdapter<>(requireActivity(), android.R.layout.simple_spinner_dropdown_item);
 
-        //Esto ya no lo hacemos así pq de esta forma ya no funciona, si no que lo ponemos en el onViewCreated un onClick sobre spineerDptos
-//        //Recuperar aulas al spinner
-//        aulasVM.getAulas().observe(this, new Observer<List<Aula>>() {
-//            @Override
-//            public void onChanged(List<Aula> aulas) {
-//                mAdaptadorAulas.clear();
-//                mAdaptadorAulas.add(new Aula()); //id = 0
-//                List<Aula> aulasDeEseDpto = devolverAulasConEseDepartamento(aulas, productosVM.getLogin().getId());
-//                mAdaptadorAulas.addAll(aulasDeEseDpto);
-//                binding.spAulas.setAdapter(mAdaptadorAulas);
-//                binding.spAulas.setSelection(0, false);
-//                if (mAula != null) {
-//                    for (int i = 0; i < aulas.size(); i++) {
-//                        if (aulas.get(i).getId().equals(mAula.getId())) {
-//                            binding.spAulas.setSelection(i);
-//                            productosVM.setAulaSeleccionadaFiltro(aulas.get(i));
-//                            break;
-//                        }
-//                    }
-//                }
-//            }
-//        });
-
-        // Inits
-        mAdaptadorDptos = new ArrayAdapter<>(requireActivity(),
-                android.R.layout.simple_spinner_dropdown_item,
-                new ArrayList<>());
+        login = productosVM.getLogin();
 
         // Inits Dptos Observer
         DptosViewModel dptosVM = new ViewModelProvider(requireActivity()).get(DptosViewModel.class);
-        dptosVM.getDptosSE().observe(this, new Observer<List<Departamento>>() {
+        dptosVM.getDptos().observe(this, new Observer<List<Departamento>>() {
             @Override
             public void onChanged(List<Departamento> dptos) {
                 mAdaptadorDptos.clear();
-                Departamento loginGeneral = productosVM.getLogin();
-                if (loginGeneral.getId().equals("0")) {
-                    binding.spDptos.setEnabled(true);
-                } else {
-                    binding.spDptos.setEnabled(false);
-                }
                 mAdaptadorDptos.add(new Departamento());
                 mAdaptadorDptos.addAll(dptos);
 
@@ -128,7 +89,8 @@ public class FiltroProductosFragment extends Fragment {
                         break;
                     }
                 }
-                mAdaptadorDptos.notifyDataSetChanged();
+
+                binding.spDptos.setEnabled(login.getId().equals("0"));
             }
         });
 
@@ -137,41 +99,6 @@ public class FiltroProductosFragment extends Fragment {
             @Override
             public void onChanged(String s) {
                 binding.etFecAlta.setText(s);
-            }
-        });
-
-        //Recordar aula
-//        productosVM.getAulaSeleccionadaFiltro().observe(this, new Observer<Aula>() {
-//            @Override
-//            public void onChanged(Aula aula) {
-//                String aulaId = aula.getId();
-//                List<Aula> aulas = devolverTodasLasAulas(binding.spAulas);
-//                int posicion = devolverPosicionAulaConMismoId(aulas, aulaId);
-//
-//                binding.spAulas.setSelection(posicion);
-//            }
-//        });
-        //Recordar aula
-        productosVM.getAulaSeleccionadaFiltro().observe(this, new Observer<Aula>() {
-            @Override
-            public void onChanged(Aula aula) {
-                String aulaId = aula.getId();
-                List<Aula> aulas = devovolverAula(binding.spAulas);
-                List<Aula> aulasDeEseDep = devolverAulasConEseDepartamento(aulas, productosVM.getmProductoFiltro().getIdDpto());
-
-
-                //Esto es para que pueda funcionar que recuerde el aula
-                mAula = new Aula();
-                mAula.setId(aulaId);
-
-                //Aula de 0 es todas
-                for (int i = 0; i < aulasDeEseDep.size(); i++) {
-                    if (aulasDeEseDep.get(i).getId().equals(aulaId)) {
-//                        if (aulasDeEseDep.size()<)
-                        binding.spAulas.setSelection(i+1);
-                        break;
-                    }
-                }
             }
         });
 
@@ -203,23 +130,6 @@ public class FiltroProductosFragment extends Fragment {
         return 0;
     }
 
-    private List<Aula> devolverAulasConEseDepartamento(List<Aula> aulas, String idDpto) {
-        //Si el aula es "" devolvemos todas las aulas para que pueda elegir cualquiera
-        if (idDpto.equals("")
-//        || idDpto.equals("0") //Si descomentas esta linea admin tambien tiene todas las aulas disponibles
-        ) {
-            return aulas;
-        }
-
-        List<Aula> aulasDeEseDpto = new ArrayList<>();
-        for (Aula aula : aulas) {
-            if (aula.getIdDpto().equals(idDpto)) {
-                aulasDeEseDpto.add(aula);
-            }
-        }
-        return aulasDeEseDpto;
-    }
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -231,8 +141,6 @@ public class FiltroProductosFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        binding.btFiltroAceptar.setEnabled(true);
-        binding.btFiltroCancelar.setEnabled(true);
 
         //INits
         binding.spDptos.setAdapter(mAdaptadorDptos);
@@ -245,27 +153,10 @@ public class FiltroProductosFragment extends Fragment {
         binding.btFiltroAceptar.setOnClickListener(btFiltroAceptar_OnClickListener);
         binding.btFiltroCancelar.setOnClickListener(btFiltroCancelar_OnClickListener);
         binding.btFecAlta.setOnClickListener(btFecAlta_onClickListener);
-        binding.spAulas.setOnItemSelectedListener(spAulas_onItemSelectedListener);
 
         binding.spDptos.setOnItemSelectedListener(spDptos_onItemSelectedListener);
+//        binding.spAulas.setOnItemSelectedListener(spAulas_onItemSelectedListener);
 
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mCallback = null;
     }
 
     private View.OnClickListener btFiltroCancelar_OnClickListener = new View.OnClickListener() {
@@ -289,9 +180,7 @@ public class FiltroProductosFragment extends Fragment {
                 String fecha = ((binding.etFecAlta.getText().toString().equals(""))
                         ? new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Calendar.getInstance().getTime())
                         : binding.etFecAlta.getText().toString());
-                String idAula = (binding.spAulas.getSelectedItem() != null) ?
-                        ((Aula) binding.spAulas.getSelectedItem()).getId()
-                        : "%";
+                String idAula = ((Aula) binding.spAulas.getSelectedItem()).getId();
                 String idDpto = //Si descomentas las dos siguientes lineas, admin ve todas las aulas
 //                        productosVM.getLogin().getId().equals("0") ?
 //                        "" :
@@ -300,70 +189,38 @@ public class FiltroProductosFragment extends Fragment {
             }
         }
     };
-
     private View.OnClickListener btFecAlta_onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             DialogFragment dialogoFecha = new DlgSeleccionFecha();
             dialogoFecha.show(getParentFragmentManager(), "datePicker");
-//            mCallback.onClickAbrirDlgSeleccionFecha();
         }
     };
-
-    private AdapterView.OnItemSelectedListener spAulas_onItemSelectedListener = new AdapterView.OnItemSelectedListener() {
-        @Override
-        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-            Spinner sp = (Spinner) parent;
-//            if (sp.getSelectedItem().toString().equalsIgnoreCase("")) {
-//                //Aula vacia, guardamos ese aula en el VM para que luego recuerde que pusimos el aula vacia
-//                ProductosViewModel productosVM = new ViewModelProvider(requireActivity()).get(ProductosViewModel.class);
-//                productosVM.setAulaSeleccionadaFiltro(new Aula());
-//            } else {
-//                sp.getSelectedItem().toString();
-//                Snackbar.make(binding.getRoot(), sp.getSelectedItem().toString(), BaseTransientBottomBar.LENGTH_SHORT).show();
-            Aula aula = (Aula) sp.getSelectedItem();
-            ProductosViewModel productosVM = new ViewModelProvider(requireActivity()).get(ProductosViewModel.class);
-            productosVM.setAulaSeleccionadaFiltro(aula);
-//            }
-        }
-
-        @Override
-        public void onNothingSelected(AdapterView<?> adapterView) {
-            ;
-        }
-    };
-
 
     private AdapterView.OnItemSelectedListener spDptos_onItemSelectedListener = new AdapterView.OnItemSelectedListener() {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int i, long l) {
-            Spinner sp = (Spinner) parent;
-            Departamento depElegido = (Departamento) sp.getSelectedItem();
-//            if (!((Departamento) sp.getSelectedItem()).getId().equals("")) {
-            productosVM.getmProductoFiltro().setIdDpto(depElegido.getId());
-//            }
-            //Hay que poner aqui el login del departamento que acabamos de seelccionar para que en el observer de despues lo haga bien
+            Spinner spDpto = (Spinner) parent;
+            String idDptoElegido = ((Departamento) spDpto.getSelectedItem()).getId();
+
+            mAdaptadorAulas = new ArrayAdapter<>(requireActivity(), android.R.layout.simple_spinner_dropdown_item);
+//            productosVM.getmProductoFiltro().setIdDpto(depElegido.getId());
+
+            AulasViewModel aulasVM = new ViewModelProvider(requireActivity()).get(AulasViewModel.class);
             aulasVM.getAulas().observe(getViewLifecycleOwner(), new Observer<List<Aula>>() {
                 @Override
                 public void onChanged(List<Aula> aulas) {
+                    List<Aula> aulasDeEseDpto = devolverAulasConEseDepartamento(aulas, idDptoElegido);
                     mAdaptadorAulas.clear();
                     mAdaptadorAulas.add(new Aula()); //id = 0
-                    List<Aula> aulasDeEseDpto = devolverAulasConEseDepartamento(aulas, productosVM.getmProductoFiltro().getIdDpto());
                     mAdaptadorAulas.addAll(aulasDeEseDpto);
                     binding.spAulas.setAdapter(mAdaptadorAulas);
-                    binding.spAulas.setSelection(0, false);
-                    if (mAula != null) {
-                        for (int i = 0; i < aulasDeEseDpto.size(); i++) {
-                            if (aulasDeEseDpto.get(i).getId().equals(mAula.getId())) {
-                                binding.spAulas.setSelection(i);
-                                productosVM.setAulaSeleccionadaFiltro(aulasDeEseDpto.get(i));
-                                break;
-                            }
+                    for (int i = 0; i < aulasDeEseDpto.size(); i++) {
+                        if (aulasDeEseDpto.get(i).getId().equals(productosVM.getmProductoFiltro().getIdAula())) {
+                            binding.spAulas.setSelection(i+1);
+                            break;
                         }
                     }
-//                    else {
-//                        productosVM.setAulaSeleccionadaFiltro(new Aula());
-//                    }
                 }
             });
         }
@@ -372,8 +229,63 @@ public class FiltroProductosFragment extends Fragment {
         public void onNothingSelected(AdapterView<?> adapterView) {
             ;
         }
-
     };
 
+    private List<Aula> devolverAulasConEseDepartamento(List<Aula> aulas, String idDpto) {
+        //Si el aula es "" devolvemos todas las aulas para que pueda elegir cualquiera
+        if (idDpto.equals("")
+//        || idDpto.equals("0") //Si descomentas esta linea admin tambien tiene todas las aulas disponibles
+        ) {
+            return aulas;
+        }
+
+        List<Aula> aulasDeEseDpto = new ArrayList<>();
+        for (Aula aula : aulas) {
+            if (aula.getIdDpto().equals(idDpto)) {
+                aulasDeEseDpto.add(aula);
+            }
+        }
+        return aulasDeEseDpto;
+    }
+
+//    private AdapterView.OnItemSelectedListener spAulas_onItemSelectedListener = new AdapterView.OnItemSelectedListener() {
+//        @Override
+//        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//            Spinner sp = (Spinner) parent;
+////            if (sp.getSelectedItem().toString().equalsIgnoreCase("")) {
+////                //Aula vacia, guardamos ese aula en el VM para que luego recuerde que pusimos el aula vacia
+////                ProductosViewModel productosVM = new ViewModelProvider(requireActivity()).get(ProductosViewModel.class);
+////                productosVM.setAulaSeleccionadaFiltro(new Aula());
+////            } else {
+////                sp.getSelectedItem().toString();
+////                Snackbar.make(binding.getRoot(), sp.getSelectedItem().toString(), BaseTransientBottomBar.LENGTH_SHORT).show();
+//            Aula aula = (Aula) sp.getSelectedItem();
+//            ProductosViewModel productosVM = new ViewModelProvider(requireActivity()).get(ProductosViewModel.class);
+//            productosVM.setAulaSeleccionadaFiltro(aula);
+////            }
+//        }
+//
+//        @Override
+//        public void onNothingSelected(AdapterView<?> adapterView) {
+//            ;
+//        }
+//    };
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mCallback = null;
+    }
 
 }
