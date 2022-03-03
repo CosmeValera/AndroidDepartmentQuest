@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Adapter;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
@@ -117,6 +118,7 @@ public class MtoProductosFragment extends Fragment {
         });
     }
 
+    //Yo creo que va a saer pq esta recorreidno todas las ulas y no solo las de ese dep
     private List<Aula> devolverTodasLasAulas(Spinner spAulas) {
         Adapter adapter = spAulas.getAdapter();
         if (adapter == null) { //Esto es para cuando no hay ningún producto en un aula
@@ -210,6 +212,7 @@ public class MtoProductosFragment extends Fragment {
             // Listeners
             binding.btProductoCancelar.setOnClickListener(btProductoCancelar_OnClickListener);
             binding.btProductoAceptar.setOnClickListener(btProductoAceptar_OnClickListener);
+            binding.spAulas.setOnItemSelectedListener(spAulas_onItemSelectedListener);
         } else {
             binding.btProductoCancelar.setEnabled(false);
             binding.btProductoAceptar.setEnabled(false);
@@ -233,6 +236,28 @@ public class MtoProductosFragment extends Fragment {
         mCallback = null;
     }
 
+    private AdapterView.OnItemSelectedListener spAulas_onItemSelectedListener = new AdapterView.OnItemSelectedListener() {
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            Spinner sp = (Spinner) parent;
+            if (sp.getSelectedItem().toString().equalsIgnoreCase("")) {
+                //Aula vacia, guardamos ese aula en el VM para que luego recuerde que pusimos el aula vacia
+                ProductosViewModel productosVM = new ViewModelProvider(requireActivity()).get(ProductosViewModel.class);
+                productosVM.setAulaSeleccionadaMto(new Aula());
+            } else {
+                sp.getSelectedItem().toString();
+//                Snackbar.make(binding.getRoot(), sp.getSelectedItem().toString(), BaseTransientBottomBar.LENGTH_SHORT).show();
+                Aula aula = (Aula)sp.getSelectedItem();
+                ProductosViewModel productosVM = new ViewModelProvider(requireActivity()).get(ProductosViewModel.class);
+                productosVM.setAulaSeleccionadaMto(aula);
+            }
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> adapterView) {
+            ;
+        }
+    };
     private final View.OnClickListener btProductoCancelar_OnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
