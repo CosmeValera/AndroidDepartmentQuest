@@ -82,15 +82,18 @@ public class FiltroProductosFragment extends Fragment {
                 mAdaptadorDptos.add(new Departamento());
                 mAdaptadorDptos.addAll(dptos);
 
+                binding.spDptos.setEnabled(login.getId().equals("0"));
                 String idDpto = productosVM.getmProductoFiltro().getIdDpto();
                 for (int i = 0; i < dptos.size(); i++) {
-                    if (dptos.get(i).getId().equals(idDpto)) {
+//                    if (idDpto.equals("")) {
+//                        binding.spDptos.setSelection(0);
+//                        break;
+//                    }
+                    if (dptos.get(i).getId().equals(idDpto)
+                            || dptos.get(i).getId().equals(login.getId())) {
                         binding.spDptos.setSelection(i + 1); //Pq 0 es vacio
-                        break;
                     }
                 }
-
-                binding.spDptos.setEnabled(login.getId().equals("0"));
             }
         });
 
@@ -217,7 +220,7 @@ public class FiltroProductosFragment extends Fragment {
                     binding.spAulas.setAdapter(mAdaptadorAulas);
                     for (int i = 0; i < aulasDeEseDpto.size(); i++) {
                         if (aulasDeEseDpto.get(i).getId().equals(productosVM.getmProductoFiltro().getIdAula())) {
-                            binding.spAulas.setSelection(i+1);
+                            binding.spAulas.setSelection(i + 1);
                             break;
                         }
                     }
