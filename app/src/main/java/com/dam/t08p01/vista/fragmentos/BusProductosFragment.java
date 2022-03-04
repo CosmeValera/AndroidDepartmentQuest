@@ -81,42 +81,8 @@ public class BusProductosFragment extends Fragment
                 binding.btProductoEditar.setEnabled(false);
                 binding.btProductoCrear.setEnabled(true);
 
-
-//                List<Producto> productosVista = new ArrayList<>();
-//                for (Producto p :
-//                        productos) {
-//                    Producto pv = new Producto(p.getIdDpto(), p.getId(), p.getFecAlta(), p.getNombre(), p.getIdAula(), p.getCantidad(), /*TO DO: */"", "");
-//                    productosVista.add(pv);
-//                }
-//
-//                mAdaptadorProductos.setDatos(productosVista);
-
             }
         });
-
-        // Inits Productos Observer
-//        ProductosVM.getProductosByFiltro().observe(this, new Observer<List<Producto>>() {
-//            @Override
-//            public void onChanged(List<Producto> productos) {
-//
-//                mAdaptadorProductos.setDatos(productos);
-//
-//                mAdaptadorProductos.notifyDataSetChanged();
-//                if (mAdaptadorProductos.getItemPos() != -1 &&
-//                        mAdaptadorProductos.getItemPos() < mAdaptadorProductos.getItemCount()) {
-//                    binding.rvProductos.scrollToPosition(mAdaptadorProductos.getItemPos());
-//                } else if (mAdaptadorProductos.getItemCount() > 0) {
-//                    binding.rvProductos.scrollToPosition(mAdaptadorProductos.getItemCount() - 1);
-//                }
-//                mAdaptadorProductos.setItemPos(-1);
-//                binding.btProductoEliminar.setEnabled(false);
-//                binding.btProductoEditar.setEnabled(false);
-//                binding.btProductoCrear.setEnabled(true);
-//
-//            }
-//        });
-
-
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

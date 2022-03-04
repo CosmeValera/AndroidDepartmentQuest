@@ -54,8 +54,11 @@ public class ProductosActivity extends AppCompatActivity
                 mProductosVM = new ViewModelProvider(this).get(ProductosViewModel.class);
                 mProductosVM.setLogin(mLogin);      // Guardamos el login en el ViewModel
 
-                //todo: lo ponermos aqui los datos del filtro
-                mProductosVM.getmProductoFiltro().setIdDpto(mLogin.getId());
+//                //NO PONER ESTA LINEA: (no me recordaba el depto y el aula el
+//                //filtroProductosFragment pq al hacer un giro, se destruye ProductosActivity,
+//                //y se vuelve a crear y al ejecutarse el onCreate, con la sig linea me cambiaba
+//                //el idDpto del VM)
+//                mProductosVM.getmProductoFiltro().setIdDpto(mLogin.getId());
             }
         }
         if (mLogin == null) {   // Esto no debería pasar nunca!!
