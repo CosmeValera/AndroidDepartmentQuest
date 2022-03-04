@@ -200,7 +200,7 @@ public class ProductosRepository {
                         result.postValue(true);
                         if (mRegistro) {
                             try {
-                                Registro.guardarRegistro(mContext, producto, "alta", true);
+                                Registro.guardarRegistro(mContext, producto, "editar", true);
                             } catch (Exception e) {
                                 //:)
                             }
@@ -225,7 +225,7 @@ public class ProductosRepository {
                         result.postValue(true);
                         if (mRegistro) {
                             try {
-                                Registro.guardarRegistro(mContext, producto, "alta", true);
+                                Registro.guardarRegistro(mContext, producto, "baja", true);
                             } catch (Exception e) {
                                 //:)
                             }
